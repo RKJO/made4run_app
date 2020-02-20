@@ -27,7 +27,7 @@ const Competitions = (props) => {
             }
             renderItem={item => (
               <List.Item
-                key={item.title}
+                key={item.name}
                 actions={[
                   <IconText type="star-o" text="156" key="list-vertical-star-o" />,
                   <IconText type="like-o" text="156" key="list-vertical-like-o" />,
@@ -43,7 +43,7 @@ const Competitions = (props) => {
               >
                 <List.Item.Meta
                   avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
+                  title={<a href={item.href}>{item.name}</a>}
                   description={item.description}
                 />
                 {item.content}
