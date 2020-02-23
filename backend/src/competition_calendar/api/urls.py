@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import (
-    CompetitionLinkModelListView,
-    CompetitionLinkModelListViewDetailView,
+from competition_calendar.api.views import (
+    CompetitionListView,
+    CompetitionDetailView,
 )
 
 urlpatterns = [
-    path('', CompetitionLinkModelListView.as_view()),
-    path('<pk>', CompetitionLinkModelListViewDetailView.as_view()),
+    path('', CompetitionListView.as_view()),
+    path('<slug>', CompetitionDetailView.as_view()),
 ]
