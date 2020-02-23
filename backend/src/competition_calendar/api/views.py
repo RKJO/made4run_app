@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from ..models import (
+from competition_calendar.models import (
     CompetitionModel,
     DistanceModel,
 )
@@ -7,11 +7,11 @@ from ..models import (
 from .serializers import CompetitionModelSerializer
 
 
-class CompetitionLinkModelListView(ListAPIView):
+class CompetitionListView(ListAPIView):
     queryset = CompetitionModel.objects.all()
     serializer_class = CompetitionModelSerializer
 
 
-class CompetitionLinkModelListViewDetailView(RetrieveAPIView):
+class CompetitionDetailView(RetrieveAPIView):
     queryset = CompetitionModel.objects.all()
     serializer_class = CompetitionModelSerializer
