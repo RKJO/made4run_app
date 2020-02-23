@@ -2,7 +2,11 @@ from django.db import models
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.dispatch import receiver
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+
 from django.utils.timezone import now
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -148,18 +152,13 @@ class CompetitionModel(UpdateTimeBaseModel):
     text = models.CharField(
         max_length=127, help_text=_("Link text (leave empty to generate it from url)"), null=True, blank=True
     )
-    title = models.CharField(
-        max_length=127, help_text=_("Link title (leave empty to generate it from url)"), null=True, blank=True
-    )
+    slug = models.SlugField(blank=True, unique=True)
 
     def get_text(self):
         return self.text or human_url(self.url)
 
-    def get_title(self):
-        return self.title or self.url
-
     def link_html(self):
-        html = f'<a href="{self.url}" title="{self.get_title()}" target="_blank">{self.get_text()}</a>'
+        html = f'<a href="{self.url}" title="{self.get_text()}" target="_blank">{self.get_text()}</a>'
         return mark_safe(html)
 
     link_html.short_description = _("Link")
@@ -198,6 +197,14 @@ class CompetitionModel(UpdateTimeBaseModel):
         verbose_name = _("Competition")
         verbose_name_plural = _("Competition")
         ordering = ("-start_date", "-pk")
+
+
+def pre_save_competition_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.name)
+
+
+pre_save.connect(pre_save_competition_receiver, sender=CompetitionModel)
 
 
 class DistanceModel(models.Model):
