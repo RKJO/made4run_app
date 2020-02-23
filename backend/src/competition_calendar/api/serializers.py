@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import (
+from competition_calendar.models import (
     CompetitionModel,
     DistanceModel,
 )
@@ -10,4 +10,4 @@ class CompetitionModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CompetitionModel
-        fields = ('no', 'name', 'start_date', 'url', 'description', 'distances', 'text', 'title', )
+        fields = ('no', 'name', 'start_date', 'url', 'description', 'distances', 'text', 'slug', )
