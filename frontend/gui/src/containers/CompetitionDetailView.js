@@ -7,7 +7,7 @@ class CompetitionDetail extends React.Component {
 
     state = {
         competition: {}
-    }
+    };
 
     componentDidMount() {
         const competitionID = this.props.match.params.competitionID;
@@ -22,7 +22,7 @@ class CompetitionDetail extends React.Component {
 
     render() {
         return (
-            < Card title={this.state.competition.name}>
+            <Card title={this.state.competition.name}>
                 <p>
                     {this.state.competition.description}
                 </p>
