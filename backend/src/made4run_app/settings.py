@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'djangocms_admin_style',        # https://github.com/divio/djangocms-admin-style
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -136,7 +137,7 @@ MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'woodyou_app', 'static'),
+    os.path.join(BASE_DIR, 'made4run_app', 'static'),
 )
 
 REST_FRAMEWORK = {
