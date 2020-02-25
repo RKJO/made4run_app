@@ -144,16 +144,15 @@ class CompetitionModel(UpdateTimeBaseModel):
      * createtime
      * lastupdatetime
     """
-    no = models.PositiveIntegerField(help_text=_("Sequential number of the event"), null=True, blank=True)
-    name = models.CharField(max_length=255, help_text=_("Name of the event"))
-    start_date = models.DateField(help_text=_("Start date of the Event"))
-    end_date = models.DateField(help_text=_("End date of the Event"), null=True, blank=True)
-    description = models.TextField(help_text=_("Description date of the run"), null=True, blank=True)
-    url = models.URLField(help_text=_("Link URL"))
-    text = models.CharField(
-        max_length=127, help_text=_("Link text (leave empty to generate it from url)"), null=True, blank=True
-    )
-    slug = models.SlugField(blank=True, unique=True)
+    no = models.PositiveIntegerField(_('No.'), help_text=_("Sequential number of the event"), null=True, blank=True)
+    name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the event"))
+    start_date = models.DateField(_('start date'), help_text=_("Start date of the Event"))
+    end_date = models.DateField(_('end date'), help_text=_("End date of the Event"), null=True, blank=True)
+    description = models.TextField(_('description'), help_text=_("Description date of the run"), null=True, blank=True)
+    url = models.URLField(_('url'), help_text=_("Link URL"))
+    text = models.CharField(_('text url'), max_length=127, help_text=_("Link text (leave empty to generate it from url)"),
+                            null=True, blank=True)
+    slug = models.SlugField(_('slug'), blank=True, unique=True)
 
     def get_text(self):
         return self.text or human_url(self.url)
@@ -209,8 +208,9 @@ pre_save.connect(pre_save_competition_receiver, sender=CompetitionModel)
 
 
 class DistanceModel(models.Model):
-    name = models.CharField(max_length=255, help_text=_("Name of the distance"))
+    name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the distance"))
     distance_km = models.DecimalField(
+        _('distance'),
         help_text=_("The ideal track length in kilometer."),
         unique=True,
         # store numbers up to 999 with a resolution of 4 decimal places
