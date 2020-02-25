@@ -146,7 +146,8 @@ class CompetitionModel(UpdateTimeBaseModel):
     """
     no = models.PositiveIntegerField(help_text=_("Sequential number of the event"), null=True, blank=True)
     name = models.CharField(max_length=255, help_text=_("Name of the event"))
-    start_date = models.DateField(help_text=_("Start date of the run"), null=True, blank=True)
+    start_date = models.DateField(help_text=_("Start date of the Event"))
+    end_date = models.DateField(help_text=_("End date of the Event"), null=True, blank=True)
     description = models.TextField(help_text=_("Description date of the run"), null=True, blank=True)
     url = models.URLField(help_text=_("Link URL"))
     text = models.CharField(
