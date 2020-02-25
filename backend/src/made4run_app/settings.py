@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 gettext = lambda s: s
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# TODO:
+#   with is better PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -32,17 +36,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # External apps that need to go before django's
     'djangocms_admin_style',        # https://github.com/divio/djangocms-admin-style
+    # Django modules
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Local apps
+    'account',
+    'competition_calendar',
+
+    # External apps
     'rest_framework',
     'corsheaders',
+    'versatileimagefield',
 
-    'competition_calendar',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +133,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'account.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -168,3 +181,9 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
+
+# https://django-versatileimagefield.readthedocs.io/en/latest/index.html
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    "background_images": [("header_image", "thumbnail__1080x440")],
+    "user_avatars": [("default", "thumbnail__445x445")],
+}
