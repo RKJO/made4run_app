@@ -1,3 +1,85 @@
 from django.db import models
+from django.conf import settings
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 
-# Create your models here.
+
+from versatileimagefield.fields import VersatileImageField
+
+from competition_calendar.middlewares import ThreadLocal
+from competition_calendar.models import UpdateInfoBaseModel
+
+
+class Team(UpdateInfoBaseModel):
+
+    name = models.CharField(_('Team name'), max_length=255, help_text=_("Name of the Team"))
+    description = models.TextField(_('description'), help_text=_("Description date of the Team"), null=True, blank=True)
+    members = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Team members'),
+        related_name="teams", through='TeamMembership', through_fields=('team', 'user')
+    )
+    team_image = VersatileImageField(_('Team image'), upload_to="teams-images", blank=True, null=True)
+    slug = models.SlugField(_('slug'), blank=True, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+def pre_save_team_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.name)
+
+
+pre_save.connect(pre_save_team_receiver, sender=Team)
+
+
+class TeamMembership(models.Model):
+
+    team = models.ForeignKey(
+        Team,
+        verbose_name=_('Team'),
+        on_delete=models.CASCADE,
+        related_name="team_memberships",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Member'),
+        on_delete=models.CASCADE,
+        related_name="team_memberships",
+    )
+    accepted = models.BooleanField(default=False)
+
+    # TODO:
+    #   create method with allows change status of team membership of new users only for users with
+    #   already members of that team
+
+    # __original_accepted = None
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super(TeamMembership, self).__init__(*args, **kwargs)
+    #     self.__original_accepted = self.accepted
+    #
+    # def save(self, force_insert=False, force_update=False, *args, **kwargs):
+    #     current_user = ThreadLocal.get_current_user()
+    #
+    #     if self.accepted != self.__original_accepted:
+    #         if current_user:
+    #             User = get_user_model()
+    #             if isinstance(current_user, User):
+    #
+    #
+    #
+    #     super(TeamMembership, self).save(force_insert, force_update, *args, **kwargs)
+    #     self.__original_accepted = self.accepted
+
+    class Meta:
+        unique_together = ('team', 'user')
+
+
+    # def members(self):
+    #       return self.get_queryset().filter(
+    #         Q(is_staff=False) | (Q(is_staff=True) & Q(orders__isnull=False))
+    #     )
