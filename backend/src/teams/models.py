@@ -1,10 +1,12 @@
-from django.db import models
 from django.conf import settings
-from django.utils.text import slugify
-from django.db.models.signals import pre_save
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Subquery
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from versatileimagefield.fields import VersatileImageField
 
@@ -23,6 +25,12 @@ class Team(UpdateInfoBaseModel):
     )
     team_image = VersatileImageField(_('Team image'), upload_to="teams-images", blank=True, null=True)
     slug = models.SlugField(_('slug'), blank=True, unique=True)
+
+    @property
+    def get_active_members(self):
+        return get_user_model().objects.filter(
+            id__in=Subquery(self.team_memberships.filter(accepted=True).values('user__id'))
+        )
 
     def __str__(self):
         return self.name
