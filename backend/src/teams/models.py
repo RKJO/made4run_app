@@ -35,13 +35,21 @@ class Team(UpdateInfoBaseModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('Team')
+        verbose_name_plural = _('Teams')
 
-def pre_save_team_receiver(sender, instance, *args, **kwargs):
+
+@receiver(pre_save, sender=Team)
+def pre_save_team_receiver(sender, instance, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.name)
 
 
-pre_save.connect(pre_save_team_receiver, sender=Team)
+@receiver(post_save, sender=Team)
+def create_team_membership(sender, instance, created, **kwargs):
+    if created:
+        TeamMembership.objects.create(team=instance, user=instance.create_by, accepted=True)
 
 
 class TeamMembership(models.Model):
