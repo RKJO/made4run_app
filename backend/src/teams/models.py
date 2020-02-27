@@ -68,34 +68,22 @@ class TeamMembership(models.Model):
     )
     accepted = models.BooleanField(default=False)
 
-    # TODO:
-    #   create method with allows change status of team membership of new users only for users with
-    #   already members of that team
+    __original_accepted = None
 
-    # __original_accepted = None
-    #
-    # def __init__(self, *args, **kwargs):
-    #     super(TeamMembership, self).__init__(*args, **kwargs)
-    #     self.__original_accepted = self.accepted
-    #
-    # def save(self, force_insert=False, force_update=False, *args, **kwargs):
-    #     current_user = ThreadLocal.get_current_user()
-    #
-    #     if self.accepted != self.__original_accepted:
-    #         if current_user:
-    #             User = get_user_model()
-    #             if isinstance(current_user, User):
-    #
-    #
-    #
-    #     super(TeamMembership, self).save(force_insert, force_update, *args, **kwargs)
-    #     self.__original_accepted = self.accepted
+    def __init__(self, *args, **kwargs):
+        super(TeamMembership, self).__init__(*args, **kwargs)
+        self.__original_accepted = self.accepted
+
+    def clean(self):
+        team_active_members = Team.objects.get(pk=self.team.pk).get_active_members
+        current_user = ThreadLocal.get_current_user()
+
+        if self.accepted != self.__original_accepted:
+            if current_user not in team_active_members or not current_user.staff:
+                raise ValidationError(_(f'To accept a new member of {self.team.name} you must be a member of it.'))
 
     class Meta:
         unique_together = ('team', 'user')
-
-
-    # def members(self):
-    #       return self.get_queryset().filter(
-    #         Q(is_staff=False) | (Q(is_staff=True) & Q(orders__isnull=False))
-    #     )
+        verbose_name = _('Team Membership')
+        verbose_name_plural = _('Team Memberships')
+        ordering = ('team',)
