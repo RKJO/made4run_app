@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from made4run_app.competition_calendar.models import (
+from competition_calendar.models import (
     CompetitionModel,
+    DistanceModel,
 )
 
 from .serializers import CompetitionModelSerializer

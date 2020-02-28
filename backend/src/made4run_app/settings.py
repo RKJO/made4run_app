@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Local apps
     'account',
+    'events',
     'teams',
     'competition_calendar',
 
