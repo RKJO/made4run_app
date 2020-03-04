@@ -11,7 +11,7 @@ competition_fieldsets = (
     (None, {
         'classes': ('wide',),
         'fields': (
-            ('no', 'url'),
+            ('no', 'url', 'location',),
             'name',
             ('start_date', 'end_date',),
         ),
@@ -50,7 +50,7 @@ class DistanceModelAdmin(admin.StackedInline):
 
 @admin.register(CompetitionModel)
 class CompetitionModelAdmin(admin.ModelAdmin):
-    list_display = ("name", "link_html")
+    list_display = ("name", "start_date", "location", "link_html")
     list_filter = ("name",)
     date_hierarchy = "start_date"
     search_fields = ("url", "text", "title", "name")
@@ -61,3 +61,4 @@ class CompetitionModelAdmin(admin.ModelAdmin):
 #   look ad this:
 #   - https://github.com/daniyalzade/django_reverse_admin
 #   - https://stackoverflow.com/questions/52066617/foreignkey-fields-in-add-change-forms-django-admin
+#   - create get distances method
