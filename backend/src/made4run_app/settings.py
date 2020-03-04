@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'events',
     'teams',
     'competition_calendar',
-
     # External apps
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'versatileimagefield',
 
@@ -186,6 +186,6 @@ CORS_ORIGIN_WHITELIST = [
 
 # https://django-versatileimagefield.readthedocs.io/en/latest/index.html
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    "background_images": [("header_image", "thumbnail__1080x440")],
+    "team_background_images": [("header_image", "thumbnail__1080x440")],
     "user_avatars": [("default", "thumbnail__445x445")],
 }

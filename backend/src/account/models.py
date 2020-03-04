@@ -21,8 +21,7 @@ class UserManager(BaseUserManager):
         self, email, password=None, is_staff=False, is_active=True, **extra_fields
     ):
         """Create a user instance with the given email and password."""
-        email = UserManager.normalize_email(email)
-        # Google OAuth2 backend send unnecessary username field
+        email = self.normalize_email(email)
         extra_fields.pop("username", None)
 
         user = self.model(
