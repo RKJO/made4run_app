@@ -146,6 +146,7 @@ class CompetitionModel(UpdateTimeBaseModel):
     """
     no = models.PositiveIntegerField(_('No.'), help_text=_("Sequential number of the event"), null=True, blank=True)
     name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the event"))
+    location = models.CharField(_('Location'), max_length=255, help_text=_("Location of the event"))
     start_date = models.DateField(_('start date'), help_text=_("Start date of the Event"))
     end_date = models.DateField(_('end date'), help_text=_("End date of the Event"), null=True, blank=True)
     description = models.TextField(_('description'), help_text=_("Description date of the run"), null=True, blank=True)
@@ -201,8 +202,9 @@ class CompetitionModel(UpdateTimeBaseModel):
 
 def pre_save_competition_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.name)
-
+        instance.slug = slugify(instance.name, instance.start_date.strftime("%Y"))
+# TODO:
+#   fix year in slug
 
 pre_save.connect(pre_save_competition_receiver, sender=CompetitionModel)
 
