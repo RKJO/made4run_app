@@ -1,15 +1,15 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import CompetitionList from './containers/CompetitionListView';
 import CompetitionDetail from './containers/CompetitionDetailView';
 
 
 const BaseRouter = () => (
-    <div>
-        <Route exect path='/' component={CompetitionList}/>
+    <Switch>
         <Route exect path='/:competitionID' component={CompetitionDetail}/>
-    </div>
+        <Route exect path='/' component={CompetitionList}/>
+    </Switch>
 );
 
 export default BaseRouter;
