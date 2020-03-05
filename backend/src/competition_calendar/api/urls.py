@@ -1,11 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from competition_calendar.api.views import (
-    CompetitionListView,
-    CompetitionDetailView,
+    CompetitionViewSet,
 )
 
-urlpatterns = [
-    path('', CompetitionListView.as_view()),
-    path('<slug>', CompetitionDetailView.as_view()),
-]
+router = DefaultRouter()
+router.register('api/competitions', CompetitionViewSet)
+
+urlpatterns = router.urls
