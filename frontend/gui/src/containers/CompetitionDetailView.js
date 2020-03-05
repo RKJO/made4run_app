@@ -11,7 +11,7 @@ class CompetitionDetail extends React.Component {
 
     componentDidMount() {
         const competitionID = this.props.match.params.competitionID;
-        axios.get(`http://127.0.0.1:8000/api/${competitionID}`)
+        axios.get(`http://127.0.0.1:8000/api/competitions/${competitionID}`)
             .then(res => {
                 this.setState({
                     competition: res.data
