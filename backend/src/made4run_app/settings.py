@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'competition_calendar',
     # External apps
     'rest_framework',
-    'rest_framework.authtoken',
+    'knox',
     'corsheaders',
     'versatileimagefield',
 
