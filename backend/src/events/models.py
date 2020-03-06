@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from made4run_app import settings
-from competition_calendar.models import UpdateInfoBaseModel, CompetitionModel, DistanceModel
+from competition_calendar.models import UpdateInfoBaseModel, CompetitionModel, DistanceModel, human_distance
 from teams.models import Team
 
 
@@ -30,13 +30,26 @@ class BaseEvent(UpdateInfoBaseModel):
 
 
 class BaseWorkoutEvent(BaseEvent):
-    start_date = models.DateField(_('start date'), help_text=_("Start date of the Workout"))
-    start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False,)
+    distance_km = models.DecimalField(
+        _('distance'),
+        help_text=_("The ideal track length in kilometer."),
+        unique=True,
+        # store numbers up to 999 with a resolution of 4 decimal places
+        max_digits=7,
+        decimal_places=4,
+    )
     ascent = models.SmallIntegerField(_('Ascent'), max_length=5, null=True, blank=True)
     descent = models.SmallIntegerField(_('Descent'), max_length=5, null=True, blank=True)
-    peace = models.SmallIntegerField(_('planned peace'), help_text=_("average pace at which you plan to run."), blank=True, null=True)
+    peace = models.SmallIntegerField(_('planned peace'), help_text=_("average pace at which you plan to run."),
+                                     blank=True, null=True)
+    start_date = models.DateField(_('start date'), help_text=_("Start date of the Workout"))
+    start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False,)
+
     gpx = models.FileField(upload_to='uploads/%Y/%m/%d/')
     private = models.BooleanField(_('private'), default=False)
+
+    def get_human_distance(self):
+        return human_distance(self.distance_km)
 
     class Meta:
         abstract = True
@@ -51,6 +64,9 @@ class TeamCompetitionEvent(BaseEvent):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TeamCompetitionParticipants')
 
+    def get_distances(self):
+        return self.competition.distances
+
 
 class TeamCompetitionParticipants(models.Model):
     team_event = models.ForeignKey(TeamCompetitionEvent, on_delete=models.CASCADE)
@@ -59,6 +75,8 @@ class TeamCompetitionParticipants(models.Model):
 
     class Meta:
         unique_together = ('user', 'distance')
+# TODO:
+#   distances must be related wit competition
 
 
 class TeamWorkoutEvent(BaseWorkoutEvent):

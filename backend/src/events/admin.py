@@ -1,14 +1,37 @@
 from django.contrib import admin
 
 # Register your models here.
-from events.models import TeamCompetitionEvent, TeamCompetitionParticipants
+from events.models import TeamCompetitionEvent, TeamCompetitionParticipants, TeamWorkoutEvent, TeamWorkoutParticipants
+
+
+class TeamCompetitionParticipantsAdmin(admin.TabularInline):
+    model = TeamCompetitionParticipants
 
 
 @admin.register(TeamCompetitionEvent)
-class TeamEventAdmin(admin.ModelAdmin):
-    pass
+class TeamCompetitionEventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'competition', 'team', 'get_distances')
+    inlines = [TeamCompetitionParticipantsAdmin]
 
 
-@admin.register(TeamCompetitionParticipants)
-class TeamEventParticipantsAdmin(admin.ModelAdmin):
-    pass
+class TeamWorkoutParticipantsAdmin(admin.TabularInline):
+    model = TeamWorkoutParticipants
+
+
+@admin.register(TeamWorkoutEvent)
+class TeamWorkoutEventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'start_date', 'start_time')
+    inlines = [TeamWorkoutParticipantsAdmin]
+
+
+
+'''
+name
+description
+slug
+start_date
+start_time
+ascent
+descent
+peace
+'''
