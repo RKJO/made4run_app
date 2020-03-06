@@ -6,6 +6,6 @@ from competition_calendar.api.views import (
 )
 
 router = DefaultRouter()
-router.register('api/competitions', CompetitionViewSet)
+router.register('', CompetitionViewSet)
 
 urlpatterns = router.urls
