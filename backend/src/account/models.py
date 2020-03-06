@@ -15,6 +15,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from versatileimagefield.fields import VersatileImageField
 
+from competition_calendar.models import CompetitionModel, DistanceModel
+
 
 class UserManager(BaseUserManager):
     def create_user(
@@ -71,3 +73,23 @@ class User(PermissionsMixin, AbstractBaseUser):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Sends an email to this User. """
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+class Result(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    competition = models.OneToOneField(CompetitionModel, verbose_name=_('Competitions'),
+                                       on_delete=models.CASCADE, null=True, blank=True)
+    distance = models.OneToOneField(DistanceModel, verbose_name=_('Distance'),
+                                    help_text=_("Official track length in kilometer."),
+                                    on_delete=models.CASCADE, null=True, blank=True)
+    duration = models.TimeField(verbose_name=_("Duration"), help_text=_("You officially measured finisher time"),
+                                null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.competition} - {self.distance}: {self.duration}'
+
+    class Meta:
+        verbose_name = _("Competition Result")
+        verbose_name_plural = _("Competition Results")
+        ordering = ("-competition__start_date",)
+
