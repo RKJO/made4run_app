@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Local apps
+    'core',
     'account',
-    'events',
     'teams',
+    'events',
     'competition_calendar',
     # External apps
     'rest_framework',
