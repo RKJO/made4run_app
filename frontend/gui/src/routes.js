@@ -7,8 +7,8 @@ import CompetitionDetail from './containers/CompetitionDetailView';
 
 const BaseRouter = () => (
     <Switch>
-        <Route exect path='/:competitionID' component={CompetitionDetail}/>
-        <Route exect path='/' component={CompetitionList}/>
+        <Route exect path='/competitions/:competitionSlug' component={CompetitionDetail}/>
+        <Route exect path='/competitions' component={CompetitionList}/>
     </Switch>
 );
 

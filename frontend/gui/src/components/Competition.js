@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Icon } from 'antd';
+import { List, Avatar, Icon, Button } from 'antd';
 
 const IconText = ({ type, text }) => (
   <span>
@@ -17,7 +17,7 @@ const Competitions = (props) => {
               onChange: page => {
                 console.log(page);
               },
-              pageSize: 3,
+              pageSize: 10,
             }}
             dataSource={props.data}
             renderItem={item => (
@@ -29,19 +29,18 @@ const Competitions = (props) => {
                   <IconText type="message" text="2" key="list-vertical-message" />,
                 ]}
                 extra={
-                  <img
-                    width={272}
-                    alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                  />
+                  <a href={`/${item.url}`}>
+                    <Button type="primary" shape="round" size='small'>{item.text}</Button>
+                  </a>
                 }
               >
                 <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<a href={`/${item.slug}`}>{item.name}</a>}
+                  // avatar={<Avatar src={item.avatar} />}
+                  title={<a href={`competitions/${item.slug}`}>{item.name}</a>}
                   description={item.description}
                 />
-                {item.content}
+                {item.distances}
+                
               </List.Item>
             )}
           />
