@@ -11,3 +11,8 @@ class CompetitionModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompetitionModel
         fields = ('no', 'name', 'start_date', 'url', 'description', 'distances', 'text', 'slug', )
+
+
+class CompetitionModelDetailSerializer(CompetitionModelSerializer):
+    class Meta:
+        lookup_field = 'slug'
