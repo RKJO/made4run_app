@@ -5,12 +5,13 @@ from teams.models import (
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    members = serializers.StringRelatedField(many=True)
+    # members = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Team
-        fields = ('name', 'description', 'members', 'team_image', 'slug',)
+        fields = ('id', 'name', 'description', 'members', 'team_image', 'slug',)
 # TODO:
+#   serialize members
 #   proper serialize image
 
 

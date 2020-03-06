@@ -1,8 +1,8 @@
 from rest_framework import viewsets, serializers
 from rest_framework.permissions import AllowAny
 
-from competition_calendar.models import (
-    CompetitionModel,
+from teams.models import (
+    Team,
 )
 
 from .serializers import (
@@ -13,7 +13,7 @@ from .serializers import (
 class TeamViewSet(viewsets.ModelViewSet):
     """Manage Team in the database"""
     serializer_class = TeamSerializer
-    queryset = CompetitionModel.objects.all()
+    queryset = Team.objects.all()
     permission_classes = (AllowAny,)
     lookup_field = 'slug'
 

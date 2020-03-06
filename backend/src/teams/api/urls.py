@@ -6,6 +6,6 @@ from teams.api.views import (
 )
 
 router = DefaultRouter()
-router.register('api/Teams', TeamViewSet)
+router.register('', TeamViewSet)
 
 urlpatterns = router.urls
