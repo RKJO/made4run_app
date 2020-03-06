@@ -28,12 +28,8 @@ class BaseEvent(UpdateInfoBaseModel):
     class Meta:
         abstract = True
 
-########################################################################################################################
-#                                              User Event
-########################################################################################################################
 
-
-class UserWorkoutEvent(BaseEvent):
+class BaseWorkoutEvent(BaseEvent):
     start_date = models.DateField(_('start date'), help_text=_("Start date of the Workout"))
     start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False,)
     ascent = models.SmallIntegerField(_('Ascent'), max_length=5, null=True, blank=True)
@@ -42,10 +38,8 @@ class UserWorkoutEvent(BaseEvent):
     gpx = models.FileField(upload_to='uploads/%Y/%m/%d/')
     private = models.BooleanField(_('private'), default=False)
 
-
-class UserWorkoutParticipants(models.Model):
-    user_workout = models.OneToOneField(UserWorkoutEvent, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    class Meta:
+        abstract = True
 
 ########################################################################################################################
 #                                              Team Event
@@ -54,11 +48,12 @@ class UserWorkoutParticipants(models.Model):
 
 class TeamCompetitionEvent(BaseEvent):
     competition = models.ForeignKey(CompetitionModel, on_delete=models.CASCADE)
-    team = models.OneToOneField(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TeamCompetitionParticipants')
 
 
-class TeamEventParticipants(models.Model):
-    team_event = models.OneToOneField(TeamCompetitionEvent, on_delete=models.CASCADE)
+class TeamCompetitionParticipants(models.Model):
+    team_event = models.ForeignKey(TeamCompetitionEvent, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     distance = models.ForeignKey(DistanceModel, on_delete=models.CASCADE)
 
@@ -66,10 +61,24 @@ class TeamEventParticipants(models.Model):
         unique_together = ('user', 'distance')
 
 
-class TeamWorkoutEvent(UserWorkoutEvent):
-    team = models.OneToOneField(Team, on_delete=models.CASCADE)
+class TeamWorkoutEvent(BaseWorkoutEvent):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TeamWorkoutParticipants')
 
 
 class TeamWorkoutParticipants(models.Model):
-    team_workout = models.OneToOneField(TeamWorkoutEvent, on_delete=models.CASCADE)
+    team_workout = models.ForeignKey(TeamWorkoutEvent, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+########################################################################################################################
+#                                              User Event
+########################################################################################################################
+
+
+class UserWorkoutEvent(BaseWorkoutEvent):
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='UserWorkoutParticipants')
+
+
+class UserWorkoutParticipants(models.Model):
+    user_workout = models.ForeignKey(UserWorkoutEvent, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

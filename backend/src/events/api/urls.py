@@ -1,11 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from competition_calendar.api.views import (
-    CompetitionViewSet,
+from events.api.views import (
+    TeamCompetitionEventViewSet,
 )
 
 router = DefaultRouter()
-router.register('', CompetitionViewSet)
+router.register('', TeamCompetitionEventViewSet)
 
 urlpatterns = router.urls
