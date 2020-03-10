@@ -19,7 +19,7 @@ team_membership_fieldsets = (
     (None, {
         'classes': ('wide',),
         'fields': (
-            ('user', 'accepted',),
+            ('user', 'accepted', 'is_admin'),
         ),
     }),
 )

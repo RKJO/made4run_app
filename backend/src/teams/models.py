@@ -10,8 +10,8 @@ from django.utils.translation import gettext_lazy as _
 
 from versatileimagefield.fields import VersatileImageField
 
-from competition_calendar.middlewares import ThreadLocal
-from competition_calendar.models import UpdateInfoBaseModel
+from core.middleware import ThreadLocal
+from core.utils import UpdateInfoBaseModel
 
 
 class Team(UpdateInfoBaseModel):
@@ -49,7 +49,7 @@ def pre_save_team_receiver(sender, instance, **kwargs):
 @receiver(post_save, sender=Team)
 def create_team_membership(sender, instance, created, **kwargs):
     if created:
-        TeamMembership.objects.create(team=instance, user=instance.create_by, accepted=True)
+        TeamMembership.objects.create(team=instance, user=instance.create_by, accepted=True, is_admin=True)
 
 
 class TeamMembership(models.Model):
@@ -67,6 +67,7 @@ class TeamMembership(models.Model):
         related_name="team_memberships",
     )
     accepted = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     __original_accepted = None
 
