@@ -32,6 +32,12 @@ class Team(UpdateInfoBaseModel):
             id__in=Subquery(self.team_memberships.filter(accepted=True).values('user__id'))
         )
 
+    @property
+    def get_team_admins(self):
+        return get_user_model().objects.filter(
+            id__in=Subquery(self.team_memberships.filter(is_admin=True).values('user__id'))
+        )
+
     def __str__(self):
         return self.name
 
