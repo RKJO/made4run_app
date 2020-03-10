@@ -1,12 +1,9 @@
 from django.db import models
-
-# Create your models here.
-from django.db.models.signals import pre_save
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+from core.utils import UpdateInfoBaseModel
 from made4run_app import settings
-from competition_calendar.models import UpdateInfoBaseModel, CompetitionModel, DistanceModel, human_distance
+from competition_calendar.models import Competition, Distance, human_distance
 from teams.models import Team
 
 
@@ -38,8 +35,8 @@ class BaseWorkoutEvent(BaseEvent):
         max_digits=7,
         decimal_places=4,
     )
-    ascent = models.SmallIntegerField(_('Ascent'), max_length=5, null=True, blank=True)
-    descent = models.SmallIntegerField(_('Descent'), max_length=5, null=True, blank=True)
+    ascent = models.SmallIntegerField(_('Ascent'), null=True, blank=True)
+    descent = models.SmallIntegerField(_('Descent'), null=True, blank=True)
     peace = models.SmallIntegerField(_('planned peace'), help_text=_("average pace at which you plan to run."),
                                      blank=True, null=True)
     start_date = models.DateField(_('start date'), help_text=_("Start date of the Workout"))
@@ -60,18 +57,18 @@ class BaseWorkoutEvent(BaseEvent):
 
 
 class TeamCompetitionEvent(BaseEvent):
-    competition = models.ForeignKey(CompetitionModel, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='TeamCompetitionParticipants')
 
     def get_distances(self):
-        return self.competition.distances
+        return list(self.competition.distances.all())
 
 
 class TeamCompetitionParticipants(models.Model):
     team_event = models.ForeignKey(TeamCompetitionEvent, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    distance = models.ForeignKey(DistanceModel, on_delete=models.CASCADE)
+    distance = models.ForeignKey(Distance, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('user', 'distance')

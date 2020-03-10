@@ -4,18 +4,16 @@ from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
-    Permission,
     PermissionsMixin,
 )
 
 from django.db import models
-from django.db.models import Q, Value
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 
 from versatileimagefield.fields import VersatileImageField
 
-from competition_calendar.models import CompetitionModel, DistanceModel
+from competition_calendar.models import Competition, Distance
 
 
 class UserManager(BaseUserManager):
@@ -77,9 +75,9 @@ class User(PermissionsMixin, AbstractBaseUser):
 
 class Result(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    competition = models.OneToOneField(CompetitionModel, verbose_name=_('Competitions'),
+    competition = models.OneToOneField(Competition, verbose_name=_('Competitions'),
                                        on_delete=models.CASCADE, null=True, blank=True)
-    distance = models.OneToOneField(DistanceModel, verbose_name=_('Distance'),
+    distance = models.OneToOneField(Distance, verbose_name=_('Distance'),
                                     help_text=_("Official track length in kilometer."),
                                     on_delete=models.CASCADE, null=True, blank=True)
     duration = models.TimeField(verbose_name=_("Duration"), help_text=_("You officially measured finisher time"),
@@ -92,4 +90,3 @@ class Result(models.Model):
         verbose_name = _("Competition Result")
         verbose_name_plural = _("Competition Results")
         ordering = ("-competition__start_date",)
-
