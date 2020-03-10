@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'competition_calendar.middlewares.ThreadLocal.ThreadLocalMiddleware',
+    'core.middleware.ThreadLocal.ThreadLocalMiddleware',
 ]
 
 ROOT_URLCONF = 'made4run_app.urls'

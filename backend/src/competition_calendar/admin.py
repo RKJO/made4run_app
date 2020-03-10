@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
 from .models import (
-    CompetitionModel,
-    DistanceModel,
+    Competition,
+    Distance,
 )
 
 
@@ -44,11 +44,11 @@ distance_fieldsets = (
 
 
 class DistanceModelAdmin(admin.StackedInline):
-    model = DistanceModel
+    model = Distance
     fieldsets = distance_fieldsets
 
 
-@admin.register(CompetitionModel)
+@admin.register(Competition)
 class CompetitionModelAdmin(admin.ModelAdmin):
     list_display = ("name", "start_date", "location", "link_html")
     list_filter = ("name",)
@@ -61,4 +61,3 @@ class CompetitionModelAdmin(admin.ModelAdmin):
 #   look ad this:
 #   - https://github.com/daniyalzade/django_reverse_admin
 #   - https://stackoverflow.com/questions/52066617/foreignkey-fields-in-add-change-forms-django-admin
-#   - create get distances method
