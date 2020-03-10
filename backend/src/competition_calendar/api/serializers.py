@@ -10,7 +10,7 @@ class CompetitionModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Competition
-        fields = ('no', 'name', 'start_date', 'url', 'description', 'distances', 'text', 'slug', )
+        fields = ('no', 'name', 'location', 'start_date', 'url', 'description', 'distances', 'text', 'slug', )
 
 
 class CompetitionModelDetailSerializer(CompetitionModelSerializer):
