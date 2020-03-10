@@ -1,102 +1,12 @@
 from django.db import models
 from urllib.parse import urlparse
 
-from django.conf import settings
-from django.dispatch import receiver
-from django.contrib.auth import get_user_model
-from django.utils.text import slugify
 from django.db.models.signals import pre_save
-
-from django.utils.timezone import now
+from django.utils.text import slugify
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from .middlewares import ThreadLocal
-
-
-class UpdateTimeBaseModel(models.Model):
-    """
-    Base model to automatically set:
-     * createtime
-     * lastupdatetime
-    We doesn't used auto_now_add and auto_now here, because they have the odd side effect
-    see also:
-    https://github.com/jezdez/django-dbtemplates/commit/2f27327bebe7f2e7b33e5cfb0db517f53a1b9701#commitcomment-1396126
-    """
-
-    create_time = models.DateTimeField(default=now, editable=False, help_text="Create time")
-    last_update_time = models.DateTimeField(default=now, editable=False, help_text="Time of the last change.")
-
-    def __str__(self):  # to be overwritten
-        return f"model instance ID:{self.pk}"
-
-    def save(self, *args, **kwargs):
-        self.last_update_time = now()
-        return super().save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
-
-
-class UpdateUserBaseModel(models.Model):
-    """
-    Base model to automatically set:
-     * createby
-     * lastupdateby
-    Important: "threadlocals middleware" must be used!
-    """
-
-    create_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        editable=False,
-        related_name="%(class)s_create_by",
-        null=True,
-        blank=True,  # <- If the model used outside a real request (e.g. unittest, db shell)
-        help_text="User how create this entry.",
-        on_delete=models.SET_NULL,
-    )
-    last_update_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        editable=False,
-        related_name="%(class)s_last_update_by",
-        null=True,
-        blank=True,  # <- If the model used outside a real request (e.g. unittest, db shell)
-        help_text="User as last edit this entry.",
-        on_delete=models.SET_NULL,
-    )
-
-    def __str__(self):  # to be overwritten
-        return f"model instance ID:{self.pk}"
-
-    def save(self, *args, **kwargs):
-        current_user = ThreadLocal.get_current_user()
-
-        if current_user:
-            User = get_user_model()
-            if isinstance(current_user, User):
-                if self.pk is None or kwargs.get("force_insert", False):  # New model entry
-                    self.create_by = current_user
-                self.last_update_by = current_user
-
-        return super().save(*args, **kwargs)
-
-    class Meta:
-        abstract = True
-
-
-class UpdateInfoBaseModel(UpdateTimeBaseModel, UpdateUserBaseModel):
-    """
-    Base model to automatically set:
-        * create_time
-        * last_update_time
-    and:
-        * create_by
-        * last_update_by
-    Important: "threadlocals middleware" must be used!
-    """
-
-    class Meta:
-        abstract = True
+from core.utils import UpdateTimeBaseModel, UpdateInfoBaseModel
 
 
 def human_distance(km):
@@ -138,7 +48,7 @@ def human_url(url):
     return text
 
 
-class CompetitionModel(UpdateTimeBaseModel):
+class Competition(UpdateInfoBaseModel):
     """
     inherit and automatically set from UpdateTimeBaseModel:
      * createtime
@@ -202,14 +112,13 @@ class CompetitionModel(UpdateTimeBaseModel):
 
 def pre_save_competition_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.name, instance.start_date.strftime("%Y"))
-# TODO:
-#   fix year in slug
-
-pre_save.connect(pre_save_competition_receiver, sender=CompetitionModel)
+        instance.slug = slugify(f'{instance.name}-{instance.start_date.strftime("%Y")}',)
 
 
-class DistanceModel(models.Model):
+pre_save.connect(pre_save_competition_receiver, sender=Competition)
+
+
+class Distance(models.Model):
     name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the distance"))
     distance_km = models.DecimalField(
         _('distance'),
@@ -219,11 +128,11 @@ class DistanceModel(models.Model):
         max_digits=7,
         decimal_places=4,
     )
-    ascent = models.SmallIntegerField(_('Ascent'), max_length=5, null=True, blank=True)
-    descent = models.SmallIntegerField(_('Descent'), max_length=5, null=True, blank=True)
-    ITRA_points = models.SmallIntegerField(_('ITRA points'), max_length=1, null=True, blank=True)
-    mountain_level = models.SmallIntegerField(_('Mountain level'), max_length=1, null=True, blank=True)
-    competition = models.ForeignKey(CompetitionModel, related_name='distances', on_delete=models.CASCADE)
+    ascent = models.SmallIntegerField(_('Ascent'), null=True, blank=True)
+    descent = models.SmallIntegerField(_('Descent'), null=True, blank=True)
+    ITRA_points = models.SmallIntegerField(_('ITRA points'), null=True, blank=True)
+    mountain_level = models.SmallIntegerField(_('Mountain level'), null=True, blank=True)
+    competition = models.ForeignKey(Competition, related_name='distances', on_delete=models.CASCADE)
 
     def model_callable(self):
         return self.competition.name
