@@ -8,6 +8,7 @@ from core.permissions import ActionBasedPermission
 
 from .serializers import (
     CompetitionModelSerializer,
+    CompetitionModelDetailSerializer,
 )
 
 
@@ -23,9 +24,9 @@ class CompetitionViewSet(viewsets.ModelViewSet):
     }
     lookup_field = 'slug'
 
-    # def get_serializer_class(self):
-    #     """Return appropriate serializer class"""
-    #     if self.action == 'retrieve':
-    #         return serializers.CompetitionModelDetailSerializer
-    #
-    #     return self.serializer_class
+    def get_serializer_class(self):
+        """Return appropriate serializer class"""
+        if self.action in ['create', 'update', 'partial_update']:
+            return CompetitionModelDetailSerializer
+
+        return self.serializer_class
