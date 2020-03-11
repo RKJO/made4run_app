@@ -52,6 +52,28 @@ class CompetitionModelSerializer(serializers.ModelSerializer):
         )
 
 
-class CompetitionModelDetailSerializer(CompetitionModelSerializer):
+class CompetitionModelDetailSerializer(serializers.ModelSerializer):
+    distances = DistanceSerializer(many=True)
+
     class Meta:
+        model = Competition
+        fields = (
+            'no',
+            'name',
+            'location',
+            'start_date',
+            'end_date',
+            'description',
+            'url',
+            'text',
+            'slug',
+            'distances',
+        )
         lookup_field = 'slug'
+
+    def create(self, validated_data):
+        distances_data = validated_data.pop('distances')
+        competition = Competition.objects.create(**validated_data)
+        for distance in distances_data:
+            Distance.objects.create(competition=competition, **distance)
+        return competition
