@@ -1,0 +1,18 @@
+version: "3.2"
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app/backend/src
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app/frontend/gui
+      # One-way volume to use node_modules from inside image
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: npm start
