@@ -1,10 +1,38 @@
 from rest_framework import serializers
 from competition_calendar.models import (
     Competition,
-    # Distance,
+    Distance,
 )
 
 
+class DistanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Distance
+        fields = [
+            "name",
+            "distance_km",
+            "ascent",
+            "descent",
+            "ITRA_points",
+            "mountain_level"
+        ]
+
+'''
+{
+    "no": null,
+    "name": "łemkowyna ultra trail",
+    "location": "Krynica Zdrój, deptak przy Pijalni Głównej, ul. Nowotarskiego 9",
+    "start_date": "2020-10-24",
+    "end_date": null,
+    "description": "",
+    "url": "http://www.ultralemkowyna.pl",
+    "text": "",
+    "slug": "",
+    "distances": [
+        {"name": "łut-150", "distance_km": "150", "ascent": null, "descent": null, "ITRA_points": null, "mountain_level": null}
+    ]
+}
+'''
 class CompetitionModelSerializer(serializers.ModelSerializer):
     distances = serializers.StringRelatedField(many=True)
 
