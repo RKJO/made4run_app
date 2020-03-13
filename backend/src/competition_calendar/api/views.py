@@ -26,7 +26,7 @@ class CompetitionViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         """Return appropriate serializer class"""
-        if self.action in ['create', 'update', 'partial_update']:
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return CompetitionModelDetailSerializer
 
         return self.serializer_class
