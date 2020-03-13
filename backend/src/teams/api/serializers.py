@@ -9,11 +9,19 @@ from teams.models import (
 
 
 class TeamMembershipSerializer(serializers.ModelSerializer):
-    user = UserProfileSerializer()
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = TeamMembership
         fields = ('user', 'accepted', 'is_admin',)
+
+
+class TeamMembersSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer()
+
+    class Meta:
+        model = TeamMembership
+        fields = ('user',)
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -25,10 +33,6 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ('id', 'name', 'description', 'members', 'team_image', 'slug',)
-
-# TODO:
-#   serialize members
-#   proper serialize image
 
 
 class TeamDetailSerializer(serializers.ModelSerializer):
