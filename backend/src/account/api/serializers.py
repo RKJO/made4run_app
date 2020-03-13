@@ -23,7 +23,7 @@ class ResultSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     avatar = VersatileImageFieldSerializer(sizes='user_avatars')
-    result = ResultSerializer(source='results', many=True)
+    results = ResultSerializer(source='result_set', many=True)
 
     class Meta:
         model = User
@@ -33,5 +33,5 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'last_name',
             'note',
             'avatar',
-            'result',
+            'results',
         ]
