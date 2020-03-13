@@ -33,6 +33,8 @@ class DistanceSerializer(serializers.ModelSerializer):
     ]
 }
 '''
+
+
 class CompetitionModelSerializer(serializers.ModelSerializer):
     distances = serializers.StringRelatedField(many=True)
 

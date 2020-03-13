@@ -133,9 +133,9 @@ class Distance(models.Model):
     ITRA_points = models.SmallIntegerField(_('ITRA points'), null=True, blank=True)
     mountain_level = models.SmallIntegerField(_('Mountain level'), null=True, blank=True)
     competition = models.ForeignKey(Competition, related_name='distances', on_delete=models.CASCADE)
-
-    def model_callable(self):
-        return self.competition.name
+    #
+    # def model_callable(self):
+    #     return self.competition.name
 
     def get_human_distance(self):
         return human_distance(self.distance_km)
