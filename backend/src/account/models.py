@@ -62,7 +62,7 @@ class User(PermissionsMixin, AbstractBaseUser):
         verbose_name_plural = _('users')
 
     def get_results(self):
-        return self.results.all()
+        return self.result_set.all()
 
     def get_full_name(self):
         if self.first_name or self.last_name:
@@ -78,7 +78,7 @@ class User(PermissionsMixin, AbstractBaseUser):
 
 class Result(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='results')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     competition = models.OneToOneField(Competition, verbose_name=_('Competitions'),
                                        on_delete=models.CASCADE, null=True, blank=True)
     distance = models.OneToOneField(Distance, verbose_name=_('Distance'),
