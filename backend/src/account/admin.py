@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from .models import User, Result
 
 
 class CustomUserAdmin(UserAdmin):
@@ -20,10 +20,13 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'is_superuser',)
+    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'is_superuser', 'get_results')
     list_filter = ('email',)
     search_fields = ('email','first_name', 'last_name',)
     ordering = ('email',)
 
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Result)
+# TODO:
+#   build results fields

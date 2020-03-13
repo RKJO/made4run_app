@@ -67,6 +67,9 @@ class User(PermissionsMixin, AbstractBaseUser):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    def get_results(self):
+        return self.results.all()
+
     def get_full_name(self):
         if self.first_name or self.last_name:
             return ("%s %s" % (self.first_name, self.last_name)).strip()
@@ -83,3 +86,25 @@ class User(PermissionsMixin, AbstractBaseUser):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Sends an email to this User. """
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+class Result(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='results')
+    competition = models.OneToOneField(Competition, verbose_name=_('Competitions'),
+                                       on_delete=models.CASCADE, null=True, blank=True)
+    distance = models.OneToOneField(Distance, verbose_name=_('Distance'),
+                                    help_text=_("Official track length in kilometer."),
+                                    on_delete=models.CASCADE, null=True, blank=True)
+    duration = models.TimeField(verbose_name=_("Duration"), help_text=_("You officially measured finisher time"),
+                                null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.competition} - {self.distance}: {self.duration}'
+
+    class Meta:
+        verbose_name = _("Competition Result")
+        verbose_name_plural = _("Competition Results")
+        ordering = ("-competition__start_date",)
+
+# TODO:
+#   competition should get from distance instance
