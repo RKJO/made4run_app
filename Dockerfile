@@ -18,4 +18,4 @@ COPY . /app
 RUN pip install -r /backend/src/requirements.txt
 
 RUN cd frontend/gui
-RUN npm install
+RUN npm installd
