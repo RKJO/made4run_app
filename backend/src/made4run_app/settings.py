@@ -99,43 +99,43 @@ WSGI_APPLICATION = 'made4run_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 ## PostgersQl DB
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'NAME': 'made4run_db',
-        'USER': 'postgres',
-        'PASSWORD': '1987',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         'NAME': 'made4run_db',
+#         'USER': 'postgres',
+#         'PASSWORD': '1987',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -193,6 +193,9 @@ CORS_ORIGIN_WHITELIST = [
 
 # https://django-versatileimagefield.readthedocs.io/en/latest/index.html
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    "team_background_images": [("header_image", "thumbnail__1080x440")],
+    "team_background_images": [
+        ("header_image", "thumbnail__1080x440"),
+        ('thumbnail', 'thumbnail__100x100')
+    ],
     "user_avatars": [("default", "thumbnail__445x445")],
 }

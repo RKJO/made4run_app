@@ -61,6 +61,9 @@ class User(PermissionsMixin, AbstractBaseUser):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    def get_results(self):
+        return self.results.all()
+
     def get_full_name(self):
         if self.first_name or self.last_name:
             return ("%s %s" % (self.first_name, self.last_name)).strip()
@@ -74,7 +77,8 @@ class User(PermissionsMixin, AbstractBaseUser):
 
 
 class Result(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='results')
     competition = models.OneToOneField(Competition, verbose_name=_('Competitions'),
                                        on_delete=models.CASCADE, null=True, blank=True)
     distance = models.OneToOneField(Distance, verbose_name=_('Distance'),
@@ -90,3 +94,8 @@ class Result(models.Model):
         verbose_name = _("Competition Result")
         verbose_name_plural = _("Competition Results")
         ordering = ("-competition__start_date",)
+
+
+# TODO:
+#   competition should get from distance instance
+

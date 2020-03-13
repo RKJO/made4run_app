@@ -86,8 +86,9 @@ class TeamMembership(models.Model):
         current_user = ThreadLocal.get_current_user()
 
         if self.accepted != self.__original_accepted:
-            if current_user not in team_active_members or not current_user.staff:
-                raise ValidationError(_(f'To accept a new member of {self.team.name} you must be a member of it.'))
+            if not current_user.is_staff:
+                if current_user not in team_active_members:
+                    raise ValidationError(_(f'To accept a new member of {self.team.name} you must be a member of it.'))
 
     class Meta:
         unique_together = ('team', 'user')
