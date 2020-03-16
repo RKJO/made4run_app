@@ -123,7 +123,6 @@ class Distance(models.Model):
     distance_km = models.DecimalField(
         _('distance'),
         help_text=_("The ideal track length in kilometer."),
-        unique=True,
         # store numbers up to 999 with a resolution of 4 decimal places
         max_digits=7,
         decimal_places=4,
@@ -147,6 +146,7 @@ class Distance(models.Model):
         return self.get_human_distance()
 
     class Meta:
+        unique_together = ('distance_km', 'competition')
         verbose_name = _("Distance")
         verbose_name_plural = _("Distances")
         ordering = ("-distance_km",)
