@@ -42,7 +42,7 @@ class BaseWorkoutEvent(BaseEvent):
     start_date = models.DateField(_('start date'), help_text=_("Start date of the Workout"))
     start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False,)
 
-    gpx = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    gpx = models.FileField(upload_to='uploads/%Y/%m/%d/', blank=True, null=True)
     private = models.BooleanField(_('private'), default=False)
 
     def get_human_distance(self):
