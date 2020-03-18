@@ -2,6 +2,7 @@ from rest_framework import serializers
 from versatileimagefield.serializers import VersatileImageFieldSerializer
 
 from account.api.serializers import UserProfileSerializer
+from events.api.serializers import TeamCompetitionEventSerializer, TeamWorkoutEventSerializer
 from teams.models import (
     Team,
     TeamMembership,
@@ -24,7 +25,9 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ('id', 'name', 'description', 'members', 'team_image', 'slug',)
+        fields = ('id', 'name', 'description', 'team_image', 'slug',
+                  'members',
+                  )
 
 # TODO:
 #   serialize members
@@ -32,12 +35,18 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class TeamDetailSerializer(serializers.ModelSerializer):
-    members = TeamMembershipSerializer(source='team_memberships', many=True)
     team_image = VersatileImageFieldSerializer(
         sizes='team_background_images'
     )
+    members = TeamMembershipSerializer(source='team_memberships', many=True)
+    team_competition_events = TeamCompetitionEventSerializer(source='teamcompetitionevent_set', many=True)
+    team_workout_events = TeamWorkoutEventSerializer(source='teamworkoutevent_set', many=True)
 
     class Meta:
         model = Team
-        fields = ('id', 'name', 'description', 'members', 'team_image', 'slug',)
+        fields = ('id', 'name', 'description', 'team_image', 'slug',
+                  'members',
+                  'team_competition_events',
+                  'team_workout_events'
+                  )
 
