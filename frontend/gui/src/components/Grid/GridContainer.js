@@ -8,8 +8,8 @@ const styles = {
   grid: {
     marginRight: "-15px",
     marginLeft: "-15px",
-    width: "auto"
-  }
+    width: "auto",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -25,9 +25,7 @@ function GridContainer(props) {
 }
 
 GridContainer.defaultProps = {
-  className: ""
+  className: "",
 };
 
-export {
-  GridContainer
-}
+export { GridContainer };

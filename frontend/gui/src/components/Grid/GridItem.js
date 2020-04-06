@@ -11,8 +11,8 @@ const styles = {
     minHeight: "1px",
     paddingRight: "15px",
     paddingLeft: "15px",
-    flexBasis: "auto"
-  }
+    flexBasis: "auto",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -28,9 +28,7 @@ function GridItem(props) {
 }
 
 GridItem.defaultProps = {
-  className: ""
+  className: "",
 };
 
-export {
-  GridItem
-}
+export { GridItem };
