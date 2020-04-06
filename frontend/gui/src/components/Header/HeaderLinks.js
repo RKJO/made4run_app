@@ -3,7 +3,7 @@ import React from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -50,37 +50,19 @@ function HeaderLinks(props) {
         />
       </ListItem> */}
       <ListItem className={classes.listItem}>
-        <Button
-          href=''
-          color='transparent'
-          target='_blank'
-          className={classes.navLink}
-        >
-          {/* <CloudDownload className={classes.icons} />  */}
+        <NavLink exact to='/competitions' className={classes.navLink}>
           Kalendarz zawodów
-        </Button>
+        </NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button
-          href=''
-          color='transparent'
-          target='_blank'
-          className={classes.navLink}
-        >
-          {/* <CloudDownload className={classes.icons} />  */}
+        <NavLink exact to='/events' className={classes.navLink}>
           Publiczne wydarzenia
-        </Button>
+        </NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button
-          href='https://www.creative-tim.com/product/material-kit-react?ref=mkr-navbar'
-          color='transparent'
-          target='_blank'
-          className={classes.navLink}
-        >
-          {/* <CloudDownload className={classes.icons} />  */}
+        <NavLink exact to='/teams' className={classes.navLink}>
           Zespoły
-        </Button>
+        </NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
@@ -108,7 +90,7 @@ function HeaderLinks(props) {
         >
           <Button
             color='transparent'
-            href='https://www.instagram.com/CreativeTimOfficial?ref=creativetim'
+            href=''
             target='_blank'
             className={classes.navLink}
           >
