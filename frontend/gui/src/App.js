@@ -1,54 +1,28 @@
 import React from "react";
-// nodejs library that concatenates classes
-// import classNames from "classnames";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import { Header } from "./components/Header/Header";
-import { HeaderLinks } from "./components/Header/HeaderLinks";
+import { BaseLayout } from "./containers/BaseLayout";
+import { LandingPage } from "./containers/LandingPage/LandingPage";
+import { CompetitionsPage } from "./containers/Competitions/CompetitionsPage";
 
-import { GridContainer } from "./components/Grid/GridContainer";
-import { GridItem } from "./components/Grid/GridItem";
-import Button from "./components/CustomButtons/Button";
-import { Parallax } from "./components/Parallax/Parallax.js";
-
-import styles from "./assets/jss/containers/landingPage";
-
-const useStyles = makeStyles(styles);
+import { Credits } from "./containers/Credits/Credtis";
 
 function App(props) {
-  const classes = useStyles();
-  const { ...rest } = props;
-
   return (
-    <>
-      <Header
-        color='transparent'
-        brand='Made4Run'
-        rightLinks={<HeaderLinks />}
-        fixed
-        changeColorOnScroll={{
-          height: 400,
-          color: "white",
-        }}
-        {...rest}
-      />
-      <Parallax filter image={require("./assets/img/main_bg.jpg")}>
-        <div className={classes.container}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>
-                Made for <span className={classes.danger}>RUN</span>
-              </h1>
-              <h3>
-                Biegaj, trenuj i planuj treningii. Bądź w kontakcie ze swoim
-                zespołem.
-              </h3>
-            </GridItem>
-          </GridContainer>
-        </div>
-      </Parallax>
-    </>
+    <BrowserRouter>
+      <BaseLayout>
+        <Switch>
+          {/* <Route
+            exect
+            path='/competitions/:competitionSlug'
+            component={CompetitionDetail}
+          /> */}
+          <Route path='/competitions' component={CompetitionsPage} />
+          <Route path='/credits' component={Credits} />
+          <Route exect path='/' component={LandingPage} />
+        </Switch>
+      </BaseLayout>
+    </BrowserRouter>
   );
 }
 
