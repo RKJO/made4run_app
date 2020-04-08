@@ -5,7 +5,7 @@ import { Header } from "../components/Header/Header";
 import { HeaderLinks } from "../components/Header/HeaderLinks";
 import { Footer } from "../components/Footer/Footer";
 
-function BaseLayout(props) {
+const BaseLayout = (props) => {
   return (
     <>
       <Header
@@ -22,6 +22,6 @@ function BaseLayout(props) {
       <Footer />
     </>
   );
-}
+};
 
 export { BaseLayout };
