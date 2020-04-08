@@ -1,7 +1,6 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
-
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
@@ -17,7 +16,7 @@ import { footerStyle } from "../../assets/jss/components/footerStyle";
 
 const useStyles = makeStyles(footerStyle);
 
-function Footer(props) {
+const Footer = (props) => {
   const classes = useStyles();
   const { whiteFont } = props;
   const footerClasses = classNames({
@@ -50,7 +49,7 @@ function Footer(props) {
       </div>
     </footer>
   );
-}
+};
 
 Footer.propTypes = {
   whiteFont: PropTypes.bool,

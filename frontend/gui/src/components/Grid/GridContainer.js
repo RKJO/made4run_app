@@ -14,7 +14,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function GridContainer(props) {
+const GridContainer = (props) => {
   const classes = useStyles();
   const { children, className, ...rest } = props;
   return (
@@ -22,7 +22,7 @@ function GridContainer(props) {
       {children}
     </Grid>
   );
-}
+};
 
 GridContainer.defaultProps = {
   className: "",

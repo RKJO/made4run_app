@@ -17,7 +17,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function GridItem(props) {
+const GridItem = (props) => {
   const classes = useStyles();
   const { children, className, ...rest } = props;
   return (
@@ -25,7 +25,7 @@ function GridItem(props) {
       {children}
     </Grid>
   );
-}
+};
 
 GridItem.defaultProps = {
   className: "",
