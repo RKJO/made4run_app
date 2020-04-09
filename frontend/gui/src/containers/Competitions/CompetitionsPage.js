@@ -6,6 +6,8 @@ import { GridContainer } from "../../components/Grid/GridContainer";
 import { GridItem } from "../../components/Grid/GridItem";
 import { Parallax } from "../../components/Parallax/Parallax";
 
+import { CompetitionList } from "../Competitions/CompetitionList";
+
 import styles from "../../assets/jss/containers/pageTitleComponent";
 
 const useStyles = makeStyles(styles);
@@ -31,11 +33,11 @@ const CompetitionsPage = (props) => {
           </GridContainer>
         </div>
       </Parallax>
-      <div className={classes.main}>
+      <main className={classes.main}>
         <div className={classes.container}>
-          <h1>dupa</h1>
+          <CompetitionList />
         </div>
-      </div>
+      </main>
     </>
   );
 };
