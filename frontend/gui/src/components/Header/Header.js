@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -7,7 +8,6 @@ import AppBar from "@material-ui/core/AppBar";
 // import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 // @material-ui/icons
@@ -61,9 +61,9 @@ const Header = (props) => {
     [classes.fixed]: fixed,
   });
   const brandComponent = (
-    <Button href='/' className={classes.title}>
+    <NavLink exact to='/' className={classes.navLink}>
       {brand}
-    </Button>
+    </NavLink>
   );
   return (
     <AppBar className={appBarClasses}>
