@@ -13,25 +13,25 @@ const styles = {
 };
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "name", label: "Nazwa", minWidth: 180 },
+  { id: "location", label: "Lokalizacja", minWidth: 170 },
   {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
+    id: "start_date",
+    label: "Temin zawodów",
+    minWidth: 130,
+    align: "center",
+    format: (value) => Date.parse(value.toLocaleString()),
+  },
+  {
+    id: "url",
+    label: "Link",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString(),
   },
   {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString(),
-  },
-  {
-    id: "density",
-    label: "Density",
+    id: "distances",
+    label: "Dystanse",
     minWidth: 170,
     align: "right",
     format: (value) => value.toFixed(2),
@@ -62,15 +62,25 @@ const rows = [
 ];
 
 const useStyles = makeStyles(styles);
+
 const CompetitionList = () => {
   const classes = useStyles();
+
+  const [competitions, setCompetitions] = useState([]);
+
+  useEffect(async () => {
+    await fetch("http://127.0.0.1:8000/api/competitions")
+      .then((response) => response.json())
+      .then(setCompetitions);
+  }, []);
+
   return (
     <>
       <div className={classes.section}>
         <CustomTable
           tableHeaderColor='primary'
           tableHead={columns}
-          tableData={rows}
+          tableData={competitions}
         />
       </div>
     </>
