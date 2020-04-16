@@ -1,6 +1,7 @@
 
 # Created by https://www.gitignore.io/api/node,django,python,windows,pycharm+all
 # Edit at https://www.gitignore.io/?templates=node,django,python,windows,pycharm+all
+/files_excluded
 
 ### Django ###
 *.log

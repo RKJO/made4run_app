@@ -61,8 +61,8 @@ const Header = (props) => {
     [classes.fixed]: fixed,
   });
   const brandComponent = (
-    <NavLink exact to='/' className={classes.navLink}>
-      {brand}
+    <NavLink exact to='/'>
+      <img src={brand} alt='Logo' className={classes.logo} />
     </NavLink>
   );
   return (

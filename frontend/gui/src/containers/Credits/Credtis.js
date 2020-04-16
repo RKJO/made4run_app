@@ -34,8 +34,9 @@ const Credits = (props) => {
         <div className={classes.section}>
           <List>
             <ListItem>
-              Styles &copy; {1900 + new Date().getYear()} , made with{" "}
-              <Favorite /> by{" "}
+              Styles &copy; {1900 + new Date().getYear()} , made with{"\u00a0 "}
+              <Favorite />
+              {"\u00a0 "}by{"\u00a0 "}
               <a
                 href='https://www.creative-tim.com?ref=mkr-footer'
                 target='_blank'
