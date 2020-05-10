@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import { CompetitiponSearch } from "./CompetitiponSearch";
 import { CustomTable } from "../../components/Table/Table";
 
 const styles = {
 	section: {
-		padding: "70px 0",
+		padding: "40px 0",
 		textAlign: "center",
 		color: "black",
-		minHeight: "100vh",
+		minHeight: "49vh",
 	},
 };
 
@@ -43,23 +46,35 @@ const CompetitionList = () => {
 	const classes = useStyles();
 
 	const [competitions, setCompetitions] = useState([]);
+	const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		fetch("http://127.0.0.1:8000/api/competitions")
-			.then((response) => response.json())
-			.then(setCompetitions);
+	useEffect(async () => {
+		setLoading(true);
+
+		const response = await fetch("http://127.0.0.1:8000/api/competitions");
+		const data = await response.json();
+
+		setCompetitions(data);
+		setLoading(false);
 	}, []);
 
+	const searchCompetitions = (value) => {
+		console.log(value);
+	};
+
 	return (
-		<>
-			<div className={classes.section}>
+		<section className={classes.section}>
+			<CompetitiponSearch searchCompetitions={searchCompetitions} />
+			{loading ? (
+				<CircularProgress color='secondary' />
+			) : (
 				<CustomTable
 					tableHeaderColor='primary'
 					tableHead={columns}
 					tableData={competitions}
 				/>
-			</div>
-		</>
+			)}
+		</section>
 	);
 };
 
