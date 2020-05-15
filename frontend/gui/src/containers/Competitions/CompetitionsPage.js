@@ -16,10 +16,6 @@ const useStyles = makeStyles(styles);
 const CompetitionsPage = (props) => {
 	const classes = useStyles();
 
-	const searchCompetitions = (value) => {
-		console.log(value);
-	};
-
 	return (
 		<>
 			<Parallax
