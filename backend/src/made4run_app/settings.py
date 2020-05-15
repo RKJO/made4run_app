@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # External apps
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
     'corsheaders',
     'versatileimagefield',
@@ -184,7 +185,9 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 CORS_ORIGIN_WHITELIST = [
