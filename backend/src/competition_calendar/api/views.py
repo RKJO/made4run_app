@@ -1,5 +1,6 @@
 from rest_framework import viewsets, serializers
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
+from django_filters import rest_framework as filters
 
 from competition_calendar.models import (
     Competition,
@@ -10,6 +11,17 @@ from .serializers import (
     CompetitionModelSerializer,
     CompetitionModelDetailSerializer,
 )
+
+
+class CompetitionFilter(filters.FilterSet):
+
+    name = filters.CharFilter(field_name="name", lookup_expr='icontains')
+    min_date = filters.DateFilter(field_name="start_date", lookup_expr='gte')
+    max_date = filters.DateFilter(field_name="start_date", lookup_expr='lte')
+
+    class Meta:
+        model = Competition
+        fields = ['name', 'min_date', 'max_date']
 
 
 class CompetitionViewSet(viewsets.ModelViewSet):
@@ -23,6 +35,8 @@ class CompetitionViewSet(viewsets.ModelViewSet):
         IsAdminUser: ['destroy']
     }
     lookup_field = 'slug'
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = CompetitionFilter
 
     def get_serializer_class(self):
         """Return appropriate serializer class"""
