@@ -103,69 +103,80 @@ const CustomTable = (props) => {
 	};
 
 	return (
-		<div className={classes.tableResponsive}>
-			<Table
-				className={classes.table}
-				stickyHeader
-				aria-label='sticky table'
-			>
-				<TableHead className={classes.dangerTableHeader}>
-					<TableRow className={classes.tableHeadRow}>
-						{tableHead.map((column, columnKey) => (
-							<TableCell
-								key={columnKey}
-								align={column.align}
-								className={classes.tableHeadCell}
-								style={{ minWidth: column.minWidth }}
-							>
-								{column.label}
-							</TableCell>
-						))}
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{tableData
-						.slice(
-							page * rowsPerPage,
-							page * rowsPerPage + rowsPerPage
-						)
-						.map((row, rowIndex) => {
-							return (
-								<TableRow
-									hover
-									key={rowIndex}
-									className={classes.tableBodyRow}
-								>
-									{tableHead.map((column) => {
-										const value = row[column.id];
-										return (
-											<TableCell
-												key={column.id}
-												align={column.align}
-												className={classes.tableCell}
-											>
-												{column.format &&
-												typeof value === "number"
-													? column.format(value)
-													: value}
-											</TableCell>
-										);
-									})}
-								</TableRow>
-							);
-						})}
-				</TableBody>
-			</Table>
-			<TablePagination
-				rowsPerPageOptions={[10, 25, 100]}
-				component='div'
-				count={tableData.length}
-				rowsPerPage={rowsPerPage}
-				page={page}
-				onChangePage={handleChangePage}
-				onChangeRowsPerPage={handleChangeRowsPerPage}
-			/>
-		</div>
+		<>
+			{tableData.length ? (
+				<div className={classes.tableResponsive}>
+					<Table
+						className={classes.table}
+						stickyHeader
+						aria-label='sticky table'
+					>
+						<TableHead className={classes.dangerTableHeader}>
+							<TableRow className={classes.tableHeadRow}>
+								{tableHead.map((column, columnKey) => (
+									<TableCell
+										key={columnKey}
+										align={column.align}
+										className={classes.tableHeadCell}
+										style={{ minWidth: column.minWidth }}
+									>
+										{column.label}
+									</TableCell>
+								))}
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{tableData
+								.slice(
+									page * rowsPerPage,
+									page * rowsPerPage + rowsPerPage
+								)
+								.map((row, rowIndex) => {
+									return (
+										<TableRow
+											hover
+											key={rowIndex}
+											className={classes.tableBodyRow}
+										>
+											{tableHead.map((column) => {
+												const value = row[column.id];
+												return (
+													<TableCell
+														key={column.id}
+														align={column.align}
+														className={
+															classes.tableCell
+														}
+													>
+														{column.format &&
+														typeof value ===
+															"number"
+															? column.format(
+																	value
+															  )
+															: value}
+													</TableCell>
+												);
+											})}
+										</TableRow>
+									);
+								})}
+						</TableBody>
+					</Table>
+					<TablePagination
+						rowsPerPageOptions={[10, 25, 100]}
+						component='div'
+						count={tableData.length}
+						rowsPerPage={rowsPerPage}
+						page={page}
+						onChangePage={handleChangePage}
+						onChangeRowsPerPage={handleChangeRowsPerPage}
+					/>
+				</div>
+			) : (
+				<h3>Brak wyników wyszukiwania</h3>
+			)}
+		</>
 	);
 };
 
