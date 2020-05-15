@@ -41,6 +41,7 @@ const columns = [
 ];
 
 const useStyles = makeStyles(styles);
+const apiURL = "http://127.0.0.1:8000";
 
 const CompetitionList = () => {
 	const classes = useStyles();
@@ -48,18 +49,45 @@ const CompetitionList = () => {
 	const [competitions, setCompetitions] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-	useEffect(async () => {
+	const feachData = async () => {
 		setLoading(true);
 
-		const response = await fetch("http://127.0.0.1:8000/api/competitions");
-		const data = await response.json();
+		try {
+			const response = await fetch(`${apiURL}/api/competitions`);
+			const data = await response.json();
+			setCompetitions(data);
+		} catch (e) {
+			console.log("error");
+		}
 
-		setCompetitions(data);
 		setLoading(false);
+	};
+
+	useEffect(() => {
+		feachData();
 	}, []);
 
-	const searchCompetitions = (value) => {
-		console.log(value);
+	const searchCompetitions = async (formData) => {
+		const kaysArr = Object.keys(formData).filter(
+			(item) => formData[item].length > 0
+		);
+		const query = kaysArr
+			.map((item) => `${item}=${formData[item]}`)
+			.join("&");
+
+		setLoading(true);
+
+		try {
+			const response = await fetch(
+				`${apiURL}/api/competitions/?${query}`
+			);
+			const data = await response.json();
+			setCompetitions(data);
+		} catch (e) {
+			console.log("error", e);
+		}
+
+		setLoading(false);
 	};
 
 	return (
