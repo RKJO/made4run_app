@@ -27,7 +27,7 @@ class CompetitionFilter(filters.FilterSet):
 class CompetitionViewSet(viewsets.ModelViewSet):
     """Manage Competition in the database"""
     serializer_class = CompetitionModelSerializer
-    queryset = Competition.objects.all()
+    queryset = Competition.objects.all().order_by('start_date')
     permission_classes = (ActionBasedPermission,)
     action_permissions = {
         IsAuthenticatedOrReadOnly: ['list', 'retrieve'],
