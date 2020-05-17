@@ -113,7 +113,7 @@ const CompetitiponSearch = (props) => {
 									inputVariant='outlined'
 									label='Data do:'
 									format='yyyy-MM-dd'
-									value={maxDate.length > 0 ? minDate : null}
+									value={maxDate.length > 0 ? maxDate : null}
 									InputAdornmentProps={{ position: "start" }}
 									onChange={(date) => {
 										setMaxDate(
