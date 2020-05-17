@@ -59,7 +59,7 @@ const CompetitionList = () => {
 			const data = await response.json();
 			setCompetitions(data);
 		} catch (e) {
-			console.log("error");
+			console.log("error", e);
 		}
 
 		setLoading(false);
