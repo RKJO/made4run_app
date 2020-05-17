@@ -49,11 +49,13 @@ const CompetitionList = () => {
 	const [competitions, setCompetitions] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-	const feachData = async () => {
+	const feachData = async (queryParams = "/") => {
 		setLoading(true);
 
 		try {
-			const response = await fetch(`${apiURL}/api/competitions`);
+			const response = await fetch(
+				`${apiURL}/api/competitions${queryParams}`
+			);
 			const data = await response.json();
 			setCompetitions(data);
 		} catch (e) {
@@ -71,23 +73,14 @@ const CompetitionList = () => {
 		const kaysArr = Object.keys(formData).filter(
 			(item) => formData[item].length > 0
 		);
+
 		const query = kaysArr
 			.map((item) => `${item}=${formData[item]}`)
 			.join("&");
 
-		setLoading(true);
+		const searchApiQuery = `/?${query}`;
 
-		try {
-			const response = await fetch(
-				`${apiURL}/api/competitions/?${query}`
-			);
-			const data = await response.json();
-			setCompetitions(data);
-		} catch (e) {
-			console.log("error", e);
-		}
-
-		setLoading(false);
+		feachData(searchApiQuery);
 	};
 
 	return (
