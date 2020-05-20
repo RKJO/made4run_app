@@ -17,12 +17,12 @@ import {
 	InputLabel,
 	OutlinedInput,
 } from "@material-ui/core";
-import { Star } from "@material-ui/icons";
 
 // custom components
-import RegularButton from "../../components/CustomButtons/Button";
-import { GridContainer } from "../../components/Grid/GridContainer";
-import { GridItem } from "../../components/Grid/GridItem";
+import RegularButton from "../../../components/CustomButtons/Button";
+import { GridContainer } from "../../../components/Grid/GridContainer";
+import { GridItem } from "../../../components/Grid/GridItem";
+import { CompetitionDistancesAdd } from "./CompetitionDistancesAdd";
 
 const styles = {
 	labelRoot: {
@@ -100,14 +100,7 @@ const CompetitionAdd = () => {
 			},
 		],
 	});
-	const [numberOfDistances, setNumberOfDistances] = useState(1);
-
-	const generateDistanceForm = () => {
-		for (const item in Array(numberOfDistances)) {
-			return `<p key='${item}'>Form-${item}</p>`;
-		}
-		console.log(Array(numberOfDistances));
-	};
+	const [numberOfDistances, setNumberOfDistances] = useState("1");
 
 	const addCompetitions = async () => {
 		try {
@@ -291,8 +284,24 @@ const CompetitionAdd = () => {
 						</FormControl>
 					</GridItem>
 
-					<GridItem>{generateDistanceForm()}</GridItem>
+					{/* {[...Array(parseInt(numberOfDistances)).keys()].map(
+							(item) => `<p key='${item}'>Form-${item}</p>`
+						) */}
+					{/* {generateDistanceForm()} */}
+					{/* 
+						{
+				name: "",
+				distance_km: 42.1,
+				ascent: 940,
+				descent: 940,
+				ITRA_points: null,
+				mountain_level: nul
+				l,
+			}, */}
 				</GridContainer>
+				<CompetitionDistancesAdd
+					numberOfDistances={numberOfDistances}
+				/>
 				<GridContainer
 					direction='row'
 					justify='flex-end'
