@@ -58,14 +58,14 @@ const styles = {
 	},
 };
 
-const baseDistancesObject = {
-	name: "",
-	distance_km: null,
-	ascent: null,
-	descent: null,
-	ITRA_points: null,
-	mountain_level: null,
-};
+// const baseDistancesObject = {
+// 	name: "",
+// 	distance_km: null,
+// 	ascent: null,
+// 	descent: null,
+// 	ITRA_points: null,
+// 	mountain_level: null,
+// };
 
 const useStyles = makeStyles(styles);
 const apiURL = "http://127.0.0.1:8000";
@@ -109,7 +109,16 @@ const CompetitionAdd = () => {
 			},
 		],
 	});
-	const [distances, setDistances] = useState([baseDistancesObject]);
+	const [distances, setDistances] = useState([
+		{
+			name: "",
+			distance_km: null,
+			ascent: null,
+			descent: null,
+			ITRA_points: null,
+			mountain_level: null,
+		},
+	]);
 
 	const addCompetitions = async () => {
 		try {
@@ -127,23 +136,44 @@ const CompetitionAdd = () => {
 		}
 	};
 
-	const handleDistances = (inputValue) => {
+	const handleDistancesFormNumber = (inputValue) => {
 		const numberOfDistancesForms = [...Array(parseInt(inputValue)).keys()];
-		const prevDistances = [distances];
+		setDistances((prevState) => {
+			let prevDistances = [...prevState];
 
-		if (prevDistances.length < inputValue) {
-			const distancesKeysToAdd = numberOfDistancesForms.filter(
-				(item) => !prevDistances[item]
-			);
+			if (prevDistances.length < parseInt(inputValue)) {
+				const distancesKeysToAdd = numberOfDistancesForms.filter(
+					(item) => !prevDistances[item]
+				);
 
-			distancesKeysToAdd.map(() =>
-				prevDistances.push(baseDistancesObject)
-			);
-		} else if (prevDistances.length > inputValue) {
-			numberOfDistancesForms.filter((item) => prevDistances[item]);
-		}
+				distancesKeysToAdd.map(() =>
+					prevDistances.push({
+						name: "",
+						distance_km: null,
+						ascent: null,
+						descent: null,
+						ITRA_points: null,
+						mountain_level: null,
+					})
+				);
+			} else if (prevDistances.length > parseInt(inputValue)) {
+				prevDistances = numberOfDistancesForms.map(
+					(item) => prevDistances[item]
+				);
+			}
+			return prevDistances;
+		});
+	};
 
-		setDistances(prevDistances);
+	const handleDistancesChange = (value, id) => {
+		const index = id.split("-")[1];
+		const fieldname = id.split("-")[2];
+
+		setDistances((prevState) => {
+			const distanceNewValue = [...prevState];
+			distanceNewValue[index][fieldname] = value;
+			return distanceNewValue;
+		});
 	};
 
 	const handleSubmit = () => {
@@ -299,14 +329,17 @@ const CompetitionAdd = () => {
 								id='dictances-no'
 								inputVariant='outlined'
 								value={distances.length}
-								onChange={(e) =>
-									handleDistances(e.target.value)
-								}
+								onChange={(e) => {
+									handleDistancesFormNumber(e.target.value);
+								}}
 							/>
 						</FormControl>
 					</GridItem>
 				</GridContainer>
-				<CompetitionDistancesAdd distances={distances} />
+				<CompetitionDistancesAdd
+					distances={distances}
+					handleDistancesChange={handleDistancesChange}
+				/>
 				<GridContainer
 					direction='row'
 					justify='flex-end'

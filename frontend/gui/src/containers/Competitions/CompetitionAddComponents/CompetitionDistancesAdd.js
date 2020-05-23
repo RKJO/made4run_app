@@ -50,10 +50,8 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CompetitionDistancesAdd = ({ distances }) => {
+const CompetitionDistancesAdd = ({ distances, handleDistancesChange }) => {
 	const classes = useStyles();
-	// const [distances, setDistances] = useState([]);
-	console.log(distances);
 
 	return (
 		<>
@@ -76,7 +74,12 @@ const CompetitionDistancesAdd = ({ distances }) => {
 								type='text'
 								id={`distance-${idx}-name`}
 								value={item.name}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -90,9 +93,14 @@ const CompetitionDistancesAdd = ({ distances }) => {
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${idx}-km`}
+								id={`distance-${idx}-distance_km`}
 								value={item.distance_km}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -108,7 +116,12 @@ const CompetitionDistancesAdd = ({ distances }) => {
 								type='number'
 								id={`distance-${idx}-ascent`}
 								value={item.ascent}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -124,7 +137,12 @@ const CompetitionDistancesAdd = ({ distances }) => {
 								type='number'
 								id={`distance-${idx}-descent`}
 								value={item.descent}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -140,7 +158,12 @@ const CompetitionDistancesAdd = ({ distances }) => {
 								type='number'
 								id={`distance-${idx}-ITRA-points`}
 								value={item.ITRA_points}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -156,7 +179,12 @@ const CompetitionDistancesAdd = ({ distances }) => {
 								type='number'
 								id={`distance-${idx}-moutain-level`}
 								value={item.mountain_level}
-								onChange={(e) => console.log(e.target.value)}
+								onChange={(e) =>
+									handleDistancesChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
