@@ -5,7 +5,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { CompetitiponSearch } from "./CompetitiponSearch";
 import { CustomTable } from "../../components/Table/Table";
-import { CompetitionAdd } from "./CompetitionAdd";
 
 const styles = {
 	section: {
@@ -86,7 +85,6 @@ const CompetitionList = () => {
 
 	return (
 		<section className={classes.section}>
-			<CompetitionAdd />
 			<CompetitiponSearch searchCompetitions={searchCompetitions} />
 			{loading ? (
 				<CircularProgress color='secondary' />

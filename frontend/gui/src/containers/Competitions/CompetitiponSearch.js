@@ -22,10 +22,6 @@ import {
 import RegularButton from "../../components/CustomButtons/Button";
 import { GridContainer } from "../../components/Grid/GridContainer";
 import { GridItem } from "../../components/Grid/GridItem";
-// import FormControl from "@material-ui/core/FormControl";
-// import Input  from "@material-ui/core/Input";
-
-// import TextField from "@material-ui/core/TextField";
 
 const styles = {
 	section: {
