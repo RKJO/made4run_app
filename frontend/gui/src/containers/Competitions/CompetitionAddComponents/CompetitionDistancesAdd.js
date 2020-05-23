@@ -4,10 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import {
 	FormControl,
-	FormHelperText,
+	// FormHelperText,
 	Input,
 	InputLabel,
-	OutlinedInput,
 } from "@material-ui/core";
 
 // custom components
@@ -51,43 +50,32 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CompetitionDistancesAdd = ({ numberOfDistances }) => {
+const CompetitionDistancesAdd = ({ distances }) => {
 	const classes = useStyles();
-	const [distances, setDistances] = useState([]);
+	// const [distances, setDistances] = useState([]);
 	console.log(distances);
 
 	return (
 		<>
-			{[...Array(parseInt(numberOfDistances)).keys()].map((item) => (
-				// setDistances((prevState) => [
-				// 	...prevState,
-				// 	{
-				// 		name: "",
-				// 		distance_km: 42.1,
-				// 		ascent: 940,
-				// 		descent: 940,
-				// 		ITRA_points: null,
-				// 		mountain_level: null,
-				// 	},
-				// ])
-				<GridContainer>
+			{distances.map((item, idx) => (
+				<GridContainer key={idx}>
 					<GridItem xs={12}>
 						<h5 className={classes.subtitle}>
-							Dystans no. {item + 1}
+							Dystans no. {idx + 1}
 						</h5>
 					</GridItem>
 					<GridItem xs={12} sm={12} md={8}>
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-name`}
+								htmlFor={`distance-${idx}-name`}
 							>
 								Nazwa dystansu
 							</InputLabel>
 							<Input
 								type='text'
-								id={`distance-${item}-name`}
-								value={null}
+								id={`distance-${idx}-name`}
+								value={item.name}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>
@@ -96,14 +84,14 @@ const CompetitionDistancesAdd = ({ numberOfDistances }) => {
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-km`}
+								htmlFor={`distance-${idx}-km`}
 							>
 								`Dystans (km)`
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${item}-km`}
-								value={null}
+								id={`distance-${idx}-km`}
+								value={item.distance_km}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>
@@ -112,14 +100,14 @@ const CompetitionDistancesAdd = ({ numberOfDistances }) => {
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-ascent`}
+								htmlFor={`distance-${idx}-ascent`}
 							>
 								Przewyższenie
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${item}-ascent`}
-								value={null}
+								id={`distance-${idx}-ascent`}
+								value={item.ascent}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>
@@ -128,14 +116,14 @@ const CompetitionDistancesAdd = ({ numberOfDistances }) => {
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-descent`}
+								htmlFor={`distance-${idx}-descent`}
 							>
 								Deniwelacja
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${item}-descent`}
-								value={null}
+								id={`distance-${idx}-descent`}
+								value={item.descent}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>
@@ -144,14 +132,14 @@ const CompetitionDistancesAdd = ({ numberOfDistances }) => {
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-ITRA-points`}
+								htmlFor={`distance-${idx}-ITRA-points`}
 							>
 								ITRA
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${item}-ITRA-points`}
-								value={null}
+								id={`distance-${idx}-ITRA-points`}
+								value={item.ITRA_points}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>
@@ -160,14 +148,14 @@ const CompetitionDistancesAdd = ({ numberOfDistances }) => {
 						<FormControl className={classes.formControl} fullWidth>
 							<InputLabel
 								className={classes.labelRoot}
-								htmlFor={`distance-${item}-moutain-level`}
+								htmlFor={`distance-${idx}-moutain-level`}
 							>
 								Charakter górski
 							</InputLabel>
 							<Input
 								type='number'
-								id={`distance-${item}-moutain-level`}
-								value={null}
+								id={`distance-${idx}-moutain-level`}
+								value={item.mountain_level}
 								onChange={(e) => console.log(e.target.value)}
 							/>
 						</FormControl>

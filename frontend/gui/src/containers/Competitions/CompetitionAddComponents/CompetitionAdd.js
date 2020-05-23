@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // react plugin for creating date-time-picker
 import DateFnsUtils from "@date-io/date-fns";
 import plLocale from "date-fns/locale/pl";
@@ -58,6 +58,15 @@ const styles = {
 	},
 };
 
+const baseDistancesObject = {
+	name: "",
+	distance_km: null,
+	ascent: null,
+	descent: null,
+	ITRA_points: null,
+	mountain_level: null,
+};
+
 const useStyles = makeStyles(styles);
 const apiURL = "http://127.0.0.1:8000";
 
@@ -100,7 +109,7 @@ const CompetitionAdd = () => {
 			},
 		],
 	});
-	const [numberOfDistances, setNumberOfDistances] = useState("1");
+	const [distances, setDistances] = useState([baseDistancesObject]);
 
 	const addCompetitions = async () => {
 		try {
@@ -116,6 +125,25 @@ const CompetitionAdd = () => {
 		} catch (e) {
 			console.log(JSON.stringify(newCompetition), "error: ", e);
 		}
+	};
+
+	const handleDistances = (inputValue) => {
+		const numberOfDistancesForms = [...Array(parseInt(inputValue)).keys()];
+		const prevDistances = [distances];
+
+		if (prevDistances.length < inputValue) {
+			const distancesKeysToAdd = numberOfDistancesForms.filter(
+				(item) => !prevDistances[item]
+			);
+
+			distancesKeysToAdd.map(() =>
+				prevDistances.push(baseDistancesObject)
+			);
+		} else if (prevDistances.length > inputValue) {
+			numberOfDistancesForms.filter((item) => prevDistances[item]);
+		}
+
+		setDistances(prevDistances);
 	};
 
 	const handleSubmit = () => {
@@ -266,42 +294,19 @@ const CompetitionAdd = () => {
 					<GridItem xs={2}>
 						<br />
 						<FormControl className={classes.formControl} fullWidth>
-							{/* <InputLabel
-								className={classes.labelRoot}
-								htmlFor='competition-no'
-							>
-								Edycja Zawodów
-							</InputLabel> */}
 							<OutlinedInput
 								type='number'
 								id='dictances-no'
 								inputVariant='outlined'
-								value={numberOfDistances}
+								value={distances.length}
 								onChange={(e) =>
-									setNumberOfDistances(e.target.value)
+									handleDistances(e.target.value)
 								}
 							/>
 						</FormControl>
 					</GridItem>
-
-					{/* {[...Array(parseInt(numberOfDistances)).keys()].map(
-							(item) => `<p key='${item}'>Form-${item}</p>`
-						) */}
-					{/* {generateDistanceForm()} */}
-					{/* 
-						{
-				name: "",
-				distance_km: 42.1,
-				ascent: 940,
-				descent: 940,
-				ITRA_points: null,
-				mountain_level: nul
-				l,
-			}, */}
 				</GridContainer>
-				<CompetitionDistancesAdd
-					numberOfDistances={numberOfDistances}
-				/>
+				<CompetitionDistancesAdd distances={distances} />
 				<GridContainer
 					direction='row'
 					justify='flex-end'
