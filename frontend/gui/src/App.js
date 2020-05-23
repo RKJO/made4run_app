@@ -19,8 +19,8 @@ const App = (props) => {
             path='/competitions/:competitionSlug'
             component={CompetitionDetail}
           /> */}
-					<Route path='/events' component={EventsPage} />
-					<Route path='/teams' component={TeamsPage} />
+					<Route path='/events*' component={EventsPage} />
+					<Route path='/teams*' component={TeamsPage} />
 					<Route path='/competitions*' component={CompetitionsPage} />
 					<Route path='/credits' component={Credits} />
 					<Route exect path='/' component={LandingPage} />
