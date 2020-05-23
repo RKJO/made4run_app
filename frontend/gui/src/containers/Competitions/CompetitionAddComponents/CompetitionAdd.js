@@ -72,42 +72,19 @@ const apiURL = "http://127.0.0.1:8000";
 
 const CompetitionAdd = () => {
 	const classes = useStyles();
+	const [competitionName, setCompetitionName] = useState("");
+
 	const [newCompetition, setNewCompetition] = useState({
 		no: null,
-		name: "test1",
-		location: "jakieś tam miejsce gdzieś tam",
-		start_date: "2020-01-01",
+		name: "test",
+		location: "",
+		start_date: null,
 		end_date: null,
 		description: "",
-		url: "http://www.onet.pl",
+		url: "",
 		text: "",
 		slug: "",
-		distances: [
-			{
-				name: "",
-				distance_km: 42.1,
-				ascent: 940,
-				descent: 940,
-				ITRA_points: null,
-				mountain_level: null,
-			},
-			{
-				name: "",
-				distance_km: 21,
-				ascent: 470,
-				descent: 470,
-				ITRA_points: null,
-				mountain_level: null,
-			},
-			{
-				name: "",
-				distance_km: 10,
-				ascent: 250,
-				descent: 250,
-				ITRA_points: null,
-				mountain_level: null,
-			},
-		],
+		distances: [],
 	});
 	const [distances, setDistances] = useState([
 		{
@@ -134,6 +111,17 @@ const CompetitionAdd = () => {
 		} catch (e) {
 			console.log(JSON.stringify(newCompetition), "error: ", e);
 		}
+	};
+
+	const handleCompetitionChange = (value, id) => {
+		const fieldName = id.split("-")[1];
+
+		console.log(fieldName, value);
+		setNewCompetition((prevState) => {
+			const competitionPrevValue = prevState;
+			competitionPrevValue[fieldName] = value;
+			return competitionPrevValue;
+		});
 	};
 
 	const handleDistancesFormNumber = (inputValue) => {
@@ -167,17 +155,19 @@ const CompetitionAdd = () => {
 
 	const handleDistancesChange = (value, id) => {
 		const index = id.split("-")[1];
-		const fieldname = id.split("-")[2];
+		const fieldName = id.split("-")[2];
 
 		setDistances((prevState) => {
 			const distanceNewValue = [...prevState];
-			distanceNewValue[index][fieldname] = value;
+			distanceNewValue[index][fieldName] = value;
 			return distanceNewValue;
 		});
 	};
 
 	const handleSubmit = () => {
-		console.log("submit");
+		const competition = newCompetition;
+		const competitionRedy = (competition.distances = distances);
+		console.log(competitionRedy);
 	};
 
 	return (
@@ -196,8 +186,13 @@ const CompetitionAdd = () => {
 							<Input
 								type='number'
 								id='competition-no'
-								value={null}
-								onChange={(e) => console.log(e.target.value)}
+								value={newCompetition.no}
+								onChange={(e) =>
+									handleCompetitionChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -213,8 +208,14 @@ const CompetitionAdd = () => {
 							<Input
 								type='text'
 								id='competition-name'
-								value={null}
-								onChange={(e) => console.log(e.target.value)}
+								value={newCompetition.name}
+								onChange={(e) => {
+									console.log(e.target.value, e.target.id);
+									// handleCompetitionChange(
+									// 	e.target.value,
+									// 	e.target.id
+									// );
+								}}
 							/>
 						</FormControl>
 					</GridItem>
@@ -230,8 +231,13 @@ const CompetitionAdd = () => {
 							<Input
 								type='text'
 								id='competition-location'
-								value={null}
-								onChange={(e) => console.log(e.target.value)}
+								value={newCompetition.location}
+								onChange={(e) =>
+									handleCompetitionChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -247,8 +253,13 @@ const CompetitionAdd = () => {
 							<Input
 								type='text'
 								id='competition-url'
-								value={null}
-								onChange={(e) => console.log(e.target.value)}
+								value={newCompetition.url}
+								onChange={(e) =>
+									handleCompetitionChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
@@ -262,14 +273,18 @@ const CompetitionAdd = () => {
 								<KeyboardDatePicker
 									autoOk
 									variant='inline'
-									// inputVariant='outlined'
+									// inputVariant='outlined']
+									id='competition-start_date'
 									label='Data rozpoczecia zawodów:'
 									format='yyyy-MM-dd'
-									value={null}
+									value={newCompetition.start_date}
 									InputAdornmentProps={{ position: "start" }}
-									onChange={(date) => {
-										console.log(date);
-									}}
+									onChange={(date, e) =>
+										handleCompetitionChange(
+											date,
+											e.target.id
+										)
+									}
 								/>
 							</MuiPickersUtilsProvider>
 						</FormControl>
@@ -285,13 +300,16 @@ const CompetitionAdd = () => {
 									autoOk
 									variant='inline'
 									// inputVariant='outlined'
+									id='competition-end_date'
 									label='Data zakończenia zawodów:'
 									format='yyyy-MM-dd'
-									value={null}
+									value={newCompetition.end_date}
 									InputAdornmentProps={{ position: "start" }}
-									onChange={(date) => {
-										console.log(date);
-									}}
+									onChange={(date) =>
+										console.log(
+											date.toISOString().slice(0, 10)
+										)
+									}
 								/>
 							</MuiPickersUtilsProvider>
 						</FormControl>
@@ -308,8 +326,13 @@ const CompetitionAdd = () => {
 							<Input
 								type='text'
 								id='competition-description'
-								value={null}
-								onChange={(e) => console.log(e.target.value)}
+								value={newCompetition.description}
+								onChange={(e) =>
+									handleCompetitionChange(
+										e.target.value,
+										e.target.id
+									)
+								}
 							/>
 						</FormControl>
 					</GridItem>
