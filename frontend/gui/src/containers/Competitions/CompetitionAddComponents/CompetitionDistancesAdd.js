@@ -88,10 +88,11 @@ const CompetitionDistancesAdd = ({ distances, handleDistancesChange }) => {
 								className={classes.labelRoot}
 								htmlFor={`distance-${idx}-km`}
 							>
-								`Dystans (km)`
+								Dystans (km)
 							</InputLabel>
 							<Input
 								type='number'
+								required
 								id={`distance-${idx}-distance_km`}
 								value={item.distance_km}
 								onChange={(e) =>
