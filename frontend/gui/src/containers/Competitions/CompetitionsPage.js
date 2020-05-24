@@ -9,7 +9,8 @@ import { Parallax } from "../../components/Parallax/Parallax";
 import { CompetitionList } from "./CompetitionList";
 
 import styles from "../../assets/jss/containers/pageTitleComponent";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import { CompetitionAdd } from "./CompetitionAddComponents/CompetitionAdd";
 
 const useStyles = makeStyles(styles);
 
@@ -30,23 +31,29 @@ const CompetitionsPage = (props) => {
 								Kalendarz{" "}
 								<span className={classes.danger}>Zawodów</span>
 							</h1>
-							<h4>Zajdź zawody w których chesz wystartować.</h4>
+							<h4>Znajdź zawody w których chesz wystartować.</h4>
 						</GridItem>
 					</GridContainer>
 				</div>
 			</Parallax>
 			<main className={classes.main}>
 				<div className={classes.container}>
-					<BrowserRouter>
-						<Switch>
-							{/* <Route
+					<Switch>
+						<Route
+							path='/competitions/add'
+							component={CompetitionAdd}
+						/>
+						<Route
+							exect
+							path='/competitions'
+							component={CompetitionList}
+						/>
+						{/* <Route
             exect
             path='/competitions/:competitionSlug'
             component={CompetitionDetail}
           /> */}
-							<Route path='/' component={CompetitionList} />
-						</Switch>
-					</BrowserRouter>
+					</Switch>
 				</div>
 			</main>
 		</>

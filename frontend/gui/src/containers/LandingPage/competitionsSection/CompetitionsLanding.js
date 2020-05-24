@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-// custom components
-import RegularButton from "../../components/CustomButtons/Button";
-import { GridContainer } from "../../components/Grid/GridContainer";
-import { GridItem } from "../../components/Grid/GridItem";
-import { CompetitiponSearch } from "./CompetitiponSearch";
-import { CustomTable } from "../../components/Table/Table";
+import { CustomTable } from "../../../components/Table/Table";
 
 const styles = {
 	section: {
@@ -47,12 +40,26 @@ const columns = [
 
 const useStyles = makeStyles(styles);
 const apiURL = process.env.REACT_APP_API_URL;
+console.log(process.env);
 
-const CompetitionList = () => {
+const CompetitionsLanding = () => {
 	const classes = useStyles();
 
 	const [competitions, setCompetitions] = useState([]);
 	const [loading, setLoading] = useState(false);
+
+	const getDate = () => {
+		const date = new Date();
+		const firstDay = new Date(date.getFullYear(), date.getMonth(), 2)
+			.toISOString()
+			.slice(0, 10);
+		const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 1)
+			.toISOString()
+			.slice(0, 10);
+		return `/?min_date=${firstDay}&max_date=${lastDay}`;
+	};
+
+	const [queryDate, setQueryDate] = useState(getDate());
 
 	const feachData = async (queryParams = "/") => {
 		setLoading(true);
@@ -71,39 +78,11 @@ const CompetitionList = () => {
 	};
 
 	useEffect(() => {
-		feachData();
+		feachData(queryDate);
 	}, []);
-
-	const searchCompetitions = async (formData) => {
-		const kaysArr = Object.keys(formData).filter(
-			(item) => formData[item].length > 0
-		);
-
-		const query = kaysArr
-			.map((item) => `${item}=${formData[item]}`)
-			.join("&");
-
-		const searchApiQuery = `/?${query}`;
-
-		feachData(searchApiQuery);
-	};
 
 	return (
 		<section className={classes.section}>
-			<GridContainer
-				direction='row'
-				justify='flex-end'
-				alignItems='center'
-			>
-				<GridItem xs={12} sm={12} md={2}>
-					<Link to='competitions/add'>
-						<RegularButton round fullWidth color='success'>
-							Dodaj Zawody
-						</RegularButton>
-					</Link>
-				</GridItem>
-			</GridContainer>
-			<CompetitiponSearch searchCompetitions={searchCompetitions} />
 			{loading ? (
 				<CircularProgress color='secondary' />
 			) : (
@@ -117,4 +96,4 @@ const CompetitionList = () => {
 	);
 };
 
-export { CompetitionList };
+export { CompetitionsLanding };
