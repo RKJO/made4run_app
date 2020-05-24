@@ -22,14 +22,10 @@ import {
 import RegularButton from "../../components/CustomButtons/Button";
 import { GridContainer } from "../../components/Grid/GridContainer";
 import { GridItem } from "../../components/Grid/GridItem";
-// import FormControl from "@material-ui/core/FormControl";
-// import Input  from "@material-ui/core/Input";
-
-// import TextField from "@material-ui/core/TextField";
 
 const styles = {
 	section: {
-		padding: "70px 0 0 0",
+		// padding: "20px 0 0 0",
 		textAlign: "center",
 		color: "black",
 		// minHeight: "49vh",
@@ -113,7 +109,7 @@ const CompetitiponSearch = (props) => {
 									inputVariant='outlined'
 									label='Data do:'
 									format='yyyy-MM-dd'
-									value={maxDate.length > 0 ? minDate : null}
+									value={maxDate.length > 0 ? maxDate : null}
 									InputAdornmentProps={{ position: "start" }}
 									onChange={(date) => {
 										setMaxDate(
