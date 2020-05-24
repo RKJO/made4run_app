@@ -58,50 +58,38 @@ const styles = {
 	},
 };
 
-// const baseDistancesObject = {
-// 	name: "",
-// 	distance_km: null,
-// 	ascent: null,
-// 	descent: null,
-// 	ITRA_points: null,
-// 	mountain_level: null,
-// };
+const baseDistancesObject = {
+	name: "",
+	distance_km: null,
+	ascent: null,
+	descent: null,
+	ITRA_points: null,
+	mountain_level: null,
+};
 
 const useStyles = makeStyles(styles);
-const apiURL = "http://127.0.0.1:8000";
+const apiURL = process.env.REACT_APP_API_URL;
 
 const CompetitionAdd = () => {
 	const classes = useStyles();
-	const [competitionName, setCompetitionName] = useState("");
 
 	const [newCompetition, setNewCompetition] = useState({
 		no: null,
-		name: "test",
-		location: "",
-		start_date: null,
+		name: "", //required
+		location: "", //required
+		url: "", //required
+		start_date: null, //required
 		end_date: null,
 		description: "",
-		url: "",
-		text: "",
-		slug: "",
 		distances: [],
 	});
-	const [distances, setDistances] = useState([
-		{
-			name: "",
-			distance_km: null,
-			ascent: null,
-			descent: null,
-			ITRA_points: null,
-			mountain_level: null,
-		},
-	]);
+	const [distances, setDistances] = useState([{ ...baseDistancesObject }]);
 
-	const addCompetitions = async () => {
+	const addCompetitions = async (competitionFormData) => {
 		try {
 			const addData = await fetch(`${apiURL}/api/competitions/`, {
 				method: "POST",
-				body: JSON.stringify(newCompetition),
+				body: JSON.stringify(competitionFormData),
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -109,16 +97,15 @@ const CompetitionAdd = () => {
 			const data = await addData.json();
 			console.log(data);
 		} catch (e) {
-			console.log(JSON.stringify(newCompetition), "error: ", e);
+			console.log("error: ", e);
 		}
 	};
 
 	const handleCompetitionChange = (value, id) => {
 		const fieldName = id.split("-")[1];
 
-		console.log(fieldName, value);
 		setNewCompetition((prevState) => {
-			const competitionPrevValue = prevState;
+			const competitionPrevValue = { ...prevState };
 			competitionPrevValue[fieldName] = value;
 			return competitionPrevValue;
 		});
@@ -135,14 +122,7 @@ const CompetitionAdd = () => {
 				);
 
 				distancesKeysToAdd.map(() =>
-					prevDistances.push({
-						name: "",
-						distance_km: null,
-						ascent: null,
-						descent: null,
-						ITRA_points: null,
-						mountain_level: null,
-					})
+					prevDistances.push({ ...baseDistancesObject })
 				);
 			} else if (prevDistances.length > parseInt(inputValue)) {
 				prevDistances = numberOfDistancesForms.map(
@@ -164,15 +144,16 @@ const CompetitionAdd = () => {
 		});
 	};
 
-	const handleSubmit = () => {
-		const competition = newCompetition;
-		const competitionRedy = (competition.distances = distances);
-		console.log(competitionRedy);
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const competition = { ...newCompetition };
+		competition.distances = [...distances];
+		addCompetitions(competition);
 	};
 
 	return (
 		<section className={classes.section}>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={(event) => handleSubmit(event)}>
 				<GridContainer>
 					<GridItem xs={12} sm={12} md={2}>
 						<br />
@@ -207,14 +188,15 @@ const CompetitionAdd = () => {
 							</InputLabel>
 							<Input
 								type='text'
+								required
 								id='competition-name'
 								value={newCompetition.name}
 								onChange={(e) => {
-									console.log(e.target.value, e.target.id);
-									// handleCompetitionChange(
-									// 	e.target.value,
-									// 	e.target.id
-									// );
+									// console.log(e.target.value, e.target.id);
+									handleCompetitionChange(
+										e.target.value,
+										e.target.id
+									);
 								}}
 							/>
 						</FormControl>
@@ -230,6 +212,7 @@ const CompetitionAdd = () => {
 							</InputLabel>
 							<Input
 								type='text'
+								required
 								id='competition-location'
 								value={newCompetition.location}
 								onChange={(e) =>
@@ -252,6 +235,7 @@ const CompetitionAdd = () => {
 							</InputLabel>
 							<Input
 								type='text'
+								required
 								id='competition-url'
 								value={newCompetition.url}
 								onChange={(e) =>
@@ -272,6 +256,7 @@ const CompetitionAdd = () => {
 							>
 								<KeyboardDatePicker
 									autoOk
+									required
 									variant='inline'
 									// inputVariant='outlined']
 									id='competition-start_date'
@@ -279,10 +264,10 @@ const CompetitionAdd = () => {
 									format='yyyy-MM-dd'
 									value={newCompetition.start_date}
 									InputAdornmentProps={{ position: "start" }}
-									onChange={(date, e) =>
+									onChange={(date) =>
 										handleCompetitionChange(
-											date,
-											e.target.id
+											date.toISOString().slice(0, 10),
+											"competition-start_date"
 										)
 									}
 								/>
@@ -306,8 +291,9 @@ const CompetitionAdd = () => {
 									value={newCompetition.end_date}
 									InputAdornmentProps={{ position: "start" }}
 									onChange={(date) =>
-										console.log(
-											date.toISOString().slice(0, 10)
+										handleCompetitionChange(
+											date.toISOString().slice(0, 10),
+											"competition-end_date"
 										)
 									}
 								/>
