@@ -9,7 +9,7 @@ import { Parallax } from "../../components/Parallax/Parallax";
 import { CompetitionList } from "./CompetitionList";
 
 import styles from "../../assets/jss/containers/pageTitleComponent";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { CompetitionAdd } from "./CompetitionAddComponents/CompetitionAdd";
 
 const useStyles = makeStyles(styles);
@@ -38,24 +38,22 @@ const CompetitionsPage = (props) => {
 			</Parallax>
 			<main className={classes.main}>
 				<div className={classes.container}>
-					<BrowserRouter>
-						<Switch>
-							<Route
-								path='/competitions/add'
-								component={CompetitionAdd}
-							/>
-							<Route
-								exect
-								path='/competitions'
-								component={CompetitionList}
-							/>
-							{/* <Route
+					<Switch>
+						<Route
+							path='/competitions/add'
+							component={CompetitionAdd}
+						/>
+						<Route
+							exect
+							path='/competitions'
+							component={CompetitionList}
+						/>
+						{/* <Route
             exect
             path='/competitions/:competitionSlug'
             component={CompetitionDetail}
           /> */}
-						</Switch>
-					</BrowserRouter>
+					</Switch>
 				</div>
 			</main>
 		</>
