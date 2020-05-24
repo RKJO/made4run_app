@@ -28,12 +28,12 @@ class CompetitionViewSet(viewsets.ModelViewSet):
     """Manage Competition in the database"""
     serializer_class = CompetitionModelSerializer
     queryset = Competition.objects.all().order_by('start_date')
-    permission_classes = (ActionBasedPermission,)
-    action_permissions = {
-        IsAuthenticatedOrReadOnly: ['list', 'retrieve'],
-        IsAuthenticated: ['create', 'update', 'partial_update'],
-        IsAdminUser: ['destroy']
-    }
+    # permission_classes = (ActionBasedPermission,)
+    # action_permissions = {
+    #     IsAuthenticatedOrReadOnly: ['list', 'retrieve'],
+    #     IsAuthenticated: ['create', 'update', 'partial_update'],
+    #     IsAdminUser: ['destroy']
+    # }
     lookup_field = 'slug'
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = CompetitionFilter
