@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+// custom components
+import RegularButton from "../../components/CustomButtons/Button";
+import { GridContainer } from "../../components/Grid/GridContainer";
+import { GridItem } from "../../components/Grid/GridItem";
 import { CompetitiponSearch } from "./CompetitiponSearch";
 import { CustomTable } from "../../components/Table/Table";
 
@@ -41,7 +46,7 @@ const columns = [
 ];
 
 const useStyles = makeStyles(styles);
-const apiURL = "http://127.0.0.1:8000";
+const apiURL = process.env.REACT_APP_API_URL;
 
 const CompetitionList = () => {
 	const classes = useStyles();
@@ -85,6 +90,19 @@ const CompetitionList = () => {
 
 	return (
 		<section className={classes.section}>
+			<GridContainer
+				direction='row'
+				justify='flex-end'
+				alignItems='center'
+			>
+				<GridItem xs={12} sm={12} md={2}>
+					<Link to='competitions/add'>
+						<RegularButton round fullWidth color='success'>
+							Dodaj Zawody
+						</RegularButton>
+					</Link>
+				</GridItem>
+			</GridContainer>
 			<CompetitiponSearch searchCompetitions={searchCompetitions} />
 			{loading ? (
 				<CircularProgress color='secondary' />

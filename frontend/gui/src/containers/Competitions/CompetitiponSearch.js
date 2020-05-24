@@ -25,7 +25,7 @@ import { GridItem } from "../../components/Grid/GridItem";
 
 const styles = {
 	section: {
-		padding: "70px 0 0 0",
+		// padding: "20px 0 0 0",
 		textAlign: "center",
 		color: "black",
 		// minHeight: "49vh",
