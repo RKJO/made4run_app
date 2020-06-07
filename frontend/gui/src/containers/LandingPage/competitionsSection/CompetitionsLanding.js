@@ -40,7 +40,6 @@ const columns = [
 
 const useStyles = makeStyles(styles);
 const apiURL = process.env.REACT_APP_API_URL;
-console.log(process.env);
 
 const CompetitionsLanding = () => {
 	const classes = useStyles();
