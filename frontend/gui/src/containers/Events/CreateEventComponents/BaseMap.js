@@ -4,51 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 // @react-leaflet components
 import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 
-import {
-  primaryColor,
-  warningColor,
-  dangerColor,
-  successColor,
-  infoColor,
-  roseColor,
-  grayColor,
-  primaryBoxShadow,
-  infoBoxShadow,
-} from "../../../assets/jss/main";
-
-// import "../../../assets/scss/map/map.scss";
-// import { polyline } from "leaflet";
-
-const mapStyles = {
-  primaryColor,
-  warningColor,
-  dangerColor,
-  successColor,
-  infoColor,
-  roseColor,
-  grayColor,
-  primaryBoxShadow,
-  infoBoxShadow,
-
-  leafletContainer: {
-    width: "100%",
-    height: "82.4vh",
-  },
-  polylineStyle: {
-    stroke: dangerColor,
-    /* fill: none; */
-    strokeDasharray: "20,20",
-    strokeWidth: "7",
-    opacity: "0.6",
-    margin: "10px",
-  },
-};
+import { mapStyles } from "../../../assets/jss/containers/mapStyles";
 
 const useStyles = makeStyles(mapStyles);
 
 const BaseMap = () => {
-  // @material-ui/core components
-
   const classes = useStyles();
 
   const [mapPosition, setMapPosition] = useState([52.22977, 21.01178]);
@@ -69,6 +29,20 @@ const BaseMap = () => {
     setMarkers((prevState) => [...prevState, e.latlng]);
   };
 
+  const addPolylineMarker = (e, idx) => {
+    e.originalEvent.view.L.DomEvent.stopPropagation(e);
+    setMarkers((prevState) => {
+      const prevMarkers = [...markers];
+      const newMarkers = [
+        ...prevMarkers.slice(0, idx + 1),
+        e.latlng,
+        ...prevMarkers.slice(idx + 1),
+      ];
+
+      return newMarkers;
+    });
+  };
+
   const moveMarker = (e, idx) => {
     setMarkers((prevState) => {
       const prevMarkers = [...prevState];
@@ -82,7 +56,8 @@ const BaseMap = () => {
       className={classes.leafletContainer}
       doubleClickZoom='true'
       center={mapPosition}
-      zoom='12'
+      zoomControl={false}
+      zoom='14'
       onClick={addMarker}
     >
       <TileLayer
@@ -92,7 +67,6 @@ const BaseMap = () => {
       {markers.map((position, idx) => (
         <Fragment key={idx}>
           <Marker
-            key={`marker-${idx}`}
             position={position}
             draggable='true'
             onDrag={(e) => moveMarker(e, idx)}
@@ -104,9 +78,8 @@ const BaseMap = () => {
           {(markers.length >= 2) & (markers.length !== idx + 1) ? (
             <Polyline
               className={classes.polylineStyle}
-              key={`polyline-${idx}`}
               positions={[markers[idx], markers[idx + 1]]}
-              onClick={(e) => console.log(e, idx)}
+              onClick={(e) => addPolylineMarker(e, idx)}
             />
           ) : null}
         </Fragment>
