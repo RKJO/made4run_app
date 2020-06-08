@@ -22,7 +22,7 @@ const footerStyle = {
     float: "right!important",
   },
   footer: {
-    padding: "0.9375rem 0",
+    padding: "0.6rem 0",
     textAlign: "center",
     display: "flex",
     zIndex: "2",
