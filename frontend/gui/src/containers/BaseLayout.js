@@ -13,7 +13,7 @@ const BaseLayout = (props) => {
 
   const headerControler = () => {
     switch (location.pathname) {
-      case "/events":
+      case "/events/create_new_event":
         return { color: "white" };
       default:
         return {
