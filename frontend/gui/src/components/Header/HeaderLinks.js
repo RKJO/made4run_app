@@ -13,6 +13,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // core components
 import Button from "../../components/CustomButtons/Button.js";
+import CustomDropdown from "../CustomDropdown/CustomDropdown.js";
 
 import styles from "../../assets/jss/components/headerLinksStyle.js";
 
@@ -27,10 +28,37 @@ const HeaderLinks = (props) => {
           Kalendarz zawodów
         </NavLink>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      {/* <ListItem className={classes.listItem}>
         <NavLink exact to='/events' className={classes.navLink}>
           Publiczne wydarzenia
         </NavLink>
+      </ListItem> */}
+      <ListItem className={classes.listItem}>
+        <CustomDropdown
+          hoverColor='danger'
+          noLiPadding
+          buttonText='Publiczne treningi'
+          dropdownList={[
+            <NavLink
+              to='/events/create_new_event'
+              className={classes.dropdownLink}
+            >
+              Wsztkie publiczne treningi
+            </NavLink>,
+            // <NavLink to='#' className={classes.dropdownLink}>
+            //   Treningi zespołowe
+            // </NavLink>,
+            // <NavLink to='#' className={classes.dropdownLink}>
+            //   Treningi indywidualne
+            // </NavLink>,
+            <NavLink
+              to='/events/create_new_event'
+              className={classes.dropdownLink}
+            >
+              Dodaj nowy trening
+            </NavLink>,
+          ]}
+        />
       </ListItem>
       <ListItem className={classes.listItem}>
         <NavLink exact to='/teams' className={classes.navLink}>
