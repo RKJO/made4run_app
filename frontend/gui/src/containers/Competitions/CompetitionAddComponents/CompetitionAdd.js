@@ -313,6 +313,12 @@ const CompetitionAdd = () => {
             <FormControl className={classes.formControl} fullWidth>
               <OutlinedInput
                 type='number'
+                inputProps={{
+                  min: "0",
+                  max: "10",
+                  step: "1",
+                  pattern: "d+",
+                }}
                 id='dictances-no'
                 inputVariant='outlined'
                 value={distances.length}
