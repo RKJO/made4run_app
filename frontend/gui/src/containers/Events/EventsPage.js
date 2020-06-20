@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { Switch, Route, useLocation } from "react-router-dom";
@@ -10,6 +10,7 @@ import { GridItem } from "../../components/Grid/GridItem";
 import { Parallax } from "../../components/Parallax/Parallax";
 
 import { EventCreate } from "./CreateEventComponents/EventCreate";
+import { EventsList } from "./EventsList";
 
 const EventPageStyles = {
   ...styles,
@@ -41,7 +42,7 @@ const EventsPage = (props) => {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <h1 className={classes.title}>
-                  Wydarzenia <span className={classes.danger}></span>
+                  Treningi <span className={classes.danger}></span>
                 </h1>
                 <h4>Palnuj treningi, zawody, poznawiaj nowch ludzi.</h4>
               </GridItem>
@@ -56,7 +57,7 @@ const EventsPage = (props) => {
             path='/events/create_new_event'
             component={EventCreate}
           />
-          <Route exect path='/events' component={EventCreate} />
+          <Route exect path='/events' component={EventsList} />
         </Switch>
       </main>
     </>

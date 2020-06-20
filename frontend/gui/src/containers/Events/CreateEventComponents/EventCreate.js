@@ -5,7 +5,9 @@ import { Sidebar } from "../../../components/Sidebar/Sidebar";
 const EventCreate = () => {
   return (
     <>
-      <Sidebar />
+      <Sidebar>
+        <h4>Tu bedzie formularz</h4>
+      </Sidebar>
       <BaseMap />
     </>
   );

@@ -39,10 +39,7 @@ const HeaderLinks = (props) => {
           noLiPadding
           buttonText='Publiczne treningi'
           dropdownList={[
-            <NavLink
-              to='/events/create_new_event'
-              className={classes.dropdownLink}
-            >
+            <NavLink to='/events' className={classes.dropdownLink}>
               Wsztkie publiczne treningi
             </NavLink>,
             // <NavLink to='#' className={classes.dropdownLink}>

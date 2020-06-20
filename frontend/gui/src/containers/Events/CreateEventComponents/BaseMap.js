@@ -11,6 +11,9 @@ import {
   Polyline,
 } from "react-leaflet";
 
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+
 import { mapStyles } from "../../../assets/jss/containers/mapStyles";
 
 const { BaseLayer } = LayersControl;
@@ -91,7 +94,12 @@ const BaseMap = () => {
               onDrag={(e) => moveMarker(e, idx)}
             >
               <Popup>
-                Usuń <i class='fas fa-minus-circle'></i>
+                <IconButton
+                  aria-label='Usuń'
+                  onClick={() => console.log("marker", idx)}
+                >
+                  <DeleteIcon className={classes.dangerColor} />
+                </IconButton>
               </Popup>
             </Marker>
             {(markers.length >= 2) & (markers.length !== idx + 1) ? (

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
-import Button from "../CustomButtons/Button";
 import { sidebarStyle } from "../../assets/jss/components/sidebarStyle";
 
 const useStyles = makeStyles(sidebarStyle);
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const classes = useStyles();
+  const { children } = props;
 
   const [toggleDropdown, setToggleDropdown] = useState(true);
 
@@ -20,7 +20,7 @@ const Sidebar = () => {
       <div onClick={handleFixedClick}>
         <i className={"fa fa-cog fa-2x " + classes.faCog} />
       </div>
-      {toggleDropdown && <div className={classes.dropdownMenu}></div>}
+      {toggleDropdown && <div className={classes.dropdownMenu}>{children}</div>}
     </div>
     // </div>
   );
