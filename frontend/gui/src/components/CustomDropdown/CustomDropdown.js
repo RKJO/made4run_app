@@ -12,7 +12,6 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import Divider from "@material-ui/core/Divider";
-import Icon from "@material-ui/core/Icon";
 import Popper from "@material-ui/core/Popper";
 
 // core components
@@ -46,7 +45,6 @@ export default function CustomDropdown(props) {
   const classes = useStyles();
   const {
     buttonText,
-    buttonIcon,
     dropdownList,
     buttonProps,
     dropup,
@@ -68,7 +66,6 @@ export default function CustomDropdown(props) {
     [classes.noLiPadding]: noLiPadding,
     [classes.dropdownItemRTL]: rtlActive,
   });
-  let icon = null;
 
   return (
     <div>
