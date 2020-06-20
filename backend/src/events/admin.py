@@ -1,7 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
-from events.models import TeamCompetitionEvent, TeamCompetitionParticipants, TeamWorkoutEvent, TeamWorkoutParticipants
+from events.models import (
+    TeamCompetitionEvent,
+    TeamCompetitionParticipants,
+    TeamWorkoutEvent,
+    TeamWorkoutParticipants,
+    UserWorkoutEvent,
+    UserWorkoutParticipants,
+)
 
 
 class TeamCompetitionParticipantsAdmin(admin.TabularInline):
@@ -24,6 +31,14 @@ class TeamWorkoutEventAdmin(admin.ModelAdmin):
     inlines = [TeamWorkoutParticipantsAdmin]
 
 
+class UserWorkoutParticipantsAdmin(admin.TabularInline):
+    model = UserWorkoutParticipants
+
+
+@admin.register(UserWorkoutEvent)
+class UserWorkoutEventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'start_date', 'start_time')
+    inlines = [UserWorkoutParticipantsAdmin]
 
 '''
 name
