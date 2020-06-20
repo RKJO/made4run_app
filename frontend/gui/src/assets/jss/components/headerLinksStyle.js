@@ -1,4 +1,4 @@
-import { defaultFont, dangerColor } from "../../../assets/jss/main.js";
+import { defaultFont } from "../../../assets/jss/main.js";
 
 import tooltip from "./tooltipsStyle.js";
 
