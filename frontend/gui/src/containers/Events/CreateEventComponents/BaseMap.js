@@ -41,6 +41,14 @@ const BaseMap = () => {
     setMarkers((prevState) => [...prevState, e.latlng]);
   };
 
+  const removeMarker = (idx) => {
+    setMarkers((prevState) => {
+      const prevMarkers = [...prevState];
+      prevMarkers.splice(idx, 1);
+      return prevMarkers;
+    });
+  };
+
   const addPolylineMarker = (e, idx) => {
     e.originalEvent.view.L.DomEvent.stopPropagation(e);
     setMarkers((prevState) => {
@@ -94,10 +102,7 @@ const BaseMap = () => {
               onDrag={(e) => moveMarker(e, idx)}
             >
               <Popup>
-                <IconButton
-                  aria-label='Usuń'
-                  onClick={() => console.log("marker", idx)}
-                >
+                <IconButton aria-label='Usuń' onClick={() => removeMarker(idx)}>
                   <DeleteIcon className={classes.dangerColor} />
                 </IconButton>
               </Popup>
