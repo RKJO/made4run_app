@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { container, conatinerFluid, section } from "../../assets/jss/main.js";
 import { GridContainer } from "../../components/Grid/GridContainer.js";
 import { GridItem } from "../../components/Grid/GridItem.js";
-import { Link } from "react-router-dom";
 import RegularButton from "../../components/CustomButtons/Button.js";
 import { CustomCard } from "../../components/CustomCard/CustomCard.js";
 
@@ -15,10 +14,10 @@ const EventListStyles = {
   container,
   conatinerFluid,
   section: {
-    padding: "10px 0",
+    padding: "30px 0",
     textAlign: "center",
     color: "black",
-    minHeight: "49vh",
+    minHeight: "30vh",
   },
 };
 const useStyles = makeStyles(EventListStyles);
@@ -49,25 +48,21 @@ const EventsList = () => {
   useEffect(() => {
     feachData();
   }, []);
-  console.log(events);
 
   return (
     <>
       <div className={classes.container}>
         <section className={classes.section}>
-          <GridContainer direction='row' justify='flex-end' alignItems='center'>
+          <GridContainer direction='row' justify='center' alignItems='center'>
             {loading ? (
               <CircularProgress color='secondary' />
             ) : (
               events.map((event) => (
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={3}>
                   <CustomCard data={event} />
                 </GridItem>
               ))
             )}
-            {/* <Link to='Events/add'> */}
-            {/* <CustomCard />       */}
-            {/* </Link> */}
           </GridContainer>
         </section>
       </div>

@@ -78,15 +78,15 @@ const defaultFont = {
   lineHeight: "1.5em",
 };
 
-const primaryColor = "#9c27b0";
-const warningColor = "#ff9800";
-const dangerColor = "#f44336";
-const successColor = "#4caf50";
-const infoColor = "#00acc1";
-const roseColor = "#e91e63";
-const grayColor = "#999999";
-// const blackColor = "#000";
-// const whiteColor = "#FFF";
+const primaryColor = "rgb(156, 39, 176)";
+const warningColor = "rgb(255, 152, 0)";
+const dangerColor = "rgb(244, 67, 54)";
+const successColor = "rgb(76, 175, 80)";
+const infoColor = "rgb(0, 172, 193)";
+const roseColor = "rgb(233, 30, 99)";
+const grayColor = "rgb(153, 153, 153)";
+const blackColor = "rgb(0, 0, 0)";
+const whiteColor = "rgb(255, 255, 255)";
 
 const primaryBoxShadow = {
   boxShadow:
@@ -207,6 +207,8 @@ export {
   infoColor,
   roseColor,
   grayColor,
+  blackColor,
+  whiteColor,
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,

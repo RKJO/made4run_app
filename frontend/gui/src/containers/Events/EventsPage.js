@@ -11,6 +11,7 @@ import { Parallax } from "../../components/Parallax/Parallax";
 
 import { EventCreate } from "./CreateEventComponents/EventCreate";
 import { EventsList } from "./EventsList";
+import { EventDetails } from "./EventDetails";
 
 const EventPageStyles = {
   ...styles,
@@ -52,11 +53,8 @@ const EventsPage = (props) => {
       )}
       <main className={classes.main}>
         <Switch>
-          <Route
-            exect
-            path='/events/create_new_event'
-            component={EventCreate}
-          />
+          <Route path='/events/create_new_event' component={EventCreate} />
+          <Route path='/events/:eventID' component={EventDetails} />
           <Route exect path='/events' component={EventsList} />
         </Switch>
       </main>
