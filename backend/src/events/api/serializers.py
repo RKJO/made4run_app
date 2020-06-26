@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
+
 from events.models import (
     TeamCompetitionEvent,
     TeamWorkoutEvent,
@@ -57,13 +59,28 @@ class TeamWorkoutEventSerializer(serializers.ModelSerializer):
         )
 
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'avatar',
+            'first_name',
+            'note',
+
+        )
+
+
 class UserWorkoutEventSerializer(serializers.ModelSerializer):
+    create_by = UserSerializer(many=False)
     participants = serializers.StringRelatedField(many=True)
+    gpx = serializers.FileField()
 
     class Meta:
         model = UserWorkoutEvent
         fields = (
             'id',
+            'create_by',
             'name',
             'description',
             'slug',
