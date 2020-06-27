@@ -43,9 +43,7 @@ const EventDetails = (props) => {
     setLoading(true);
     const eventID = props.match.params.eventID;
     try {
-      const response = await fetch(
-        `${apiURL}/api/events/user_workouts/${eventID}`
-      );
+      const response = await fetch(`${apiURL}events/user_workouts/${eventID}`);
       const data = await response.json();
       setEvent(data);
     } catch (e) {

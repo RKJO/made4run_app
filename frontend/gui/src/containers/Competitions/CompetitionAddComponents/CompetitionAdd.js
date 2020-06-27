@@ -87,7 +87,7 @@ const CompetitionAdd = () => {
 
   const addCompetitions = async (competitionFormData) => {
     try {
-      const addData = await fetch(`${apiURL}/api/competitions/`, {
+      const addData = await fetch(`${apiURL}competitions/`, {
         method: "POST",
         body: JSON.stringify(competitionFormData),
         headers: {

@@ -58,7 +58,7 @@ const CompetitionList = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${apiURL}/api/competitions${queryParams}`);
+      const response = await fetch(`${apiURL}competitions${queryParams}`);
       const data = await response.json();
       setCompetitions(data);
     } catch (e) {

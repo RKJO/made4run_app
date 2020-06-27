@@ -34,7 +34,7 @@ const EventsList = () => {
 
     try {
       const response = await fetch(
-        `${apiURL}/api/events/user_workouts${queryParams}`
+        `${apiURL}events/user_workouts${queryParams}`
       );
       const data = await response.json();
       setEvents(data);
