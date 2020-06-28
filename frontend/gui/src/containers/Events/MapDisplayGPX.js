@@ -27,7 +27,6 @@ const MapDisplayGPX = ({
     [classes.leafletContainer]: mapLG,
     [classes.leafletSmall]: mapSM,
   });
-  console.log(typeof gpx);
 
   const [mapPosition, setMapPosition] = useState([52.22977, 21.01178]);
 
