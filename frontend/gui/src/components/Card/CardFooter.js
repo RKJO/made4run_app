@@ -12,7 +12,7 @@ import styles from "../../assets/jss/components/cardFooterStyle.js";
 
 const useStyles = makeStyles(styles);
 
-export default function CardFooter(props) {
+const CardFooter = (props) => {
   const classes = useStyles();
   const { className, children, plain, profile, stats, chart, ...rest } = props;
   const cardFooterClasses = classNames({
@@ -28,7 +28,7 @@ export default function CardFooter(props) {
       {children}
     </div>
   );
-}
+};
 
 CardFooter.propTypes = {
   className: PropTypes.string,
@@ -38,3 +38,5 @@ CardFooter.propTypes = {
   chart: PropTypes.bool,
   children: PropTypes.node,
 };
+
+export { CardFooter };
