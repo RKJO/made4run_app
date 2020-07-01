@@ -8,6 +8,7 @@ import { TeamsPage } from "./containers/Teams/TeamsPage";
 import { EventsPage } from "./containers/Events/EventsPage";
 
 import { Credits } from "./containers/Credits/Credtis";
+import { LogiInPage } from "./containers/Registration/LogiInPage";
 
 const App = (props) => {
   return (
@@ -23,6 +24,7 @@ const App = (props) => {
           <Route path='/teams*' component={TeamsPage} />
           <Route path='/competitions*' component={CompetitionsPage} />
           <Route path='/credits' component={Credits} />
+          <Route path='/login' component={LogiInPage} />
           <Route exect path='/' component={LandingPage} />
         </Switch>
       </BaseLayout>
