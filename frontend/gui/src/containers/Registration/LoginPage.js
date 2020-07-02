@@ -10,7 +10,6 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 
-import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import Email from "@material-ui/icons/Email";
 import Visibility from "@material-ui/icons/Visibility";
@@ -31,7 +30,7 @@ import image from "../../assets/img/login.jpg";
 import brand from "../../assets/img/m4run_logo_sm.png";
 const useStyles = makeStyles(signUpPageStyles);
 
-const LogiInPage = () => {
+const LoginPage = () => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -144,7 +143,7 @@ const LogiInPage = () => {
                   </FormControl>
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
-                  <Button simple color='danger' size='lg'>
+                  <Button type='submit' simple color='danger' size='lg'>
                     Zaloguj
                   </Button>
                 </CardFooter>
@@ -158,4 +157,4 @@ const LogiInPage = () => {
   );
 };
 
-export { LogiInPage };
+export { LoginPage };
