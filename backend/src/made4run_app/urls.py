@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
-    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
     path('api/competitions/', include('competition_calendar.api.urls')),
     path('api/teams/', include('teams.api.urls')),
     path('api/events/', include('events.api.urls')),
