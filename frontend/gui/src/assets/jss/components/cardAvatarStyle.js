@@ -1,5 +1,3 @@
-import { blackColor } from "../main.js";
-
 const cardAvatarStyle = {
   cardAvatar: {
     "&$cardAvatarProfile img": {
