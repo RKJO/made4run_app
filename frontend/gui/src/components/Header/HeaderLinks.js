@@ -62,6 +62,16 @@ const HeaderLinks = (props) => {
         </NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
+        <NavLink exact to='/login' className={classes.navLink}>
+          Zaloguj
+        </NavLink>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <NavLink exact to='/register' className={classes.navLink}>
+          Zarejestruj się
+        </NavLink>
+      </ListItem>
+      <ListItem className={classes.listItem}>
         <Tooltip
           id='instagram-facebook'
           title='Follow us on facebook'
