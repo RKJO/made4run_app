@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,15 +26,28 @@ import Button from "../../components/CustomButtons/Button";
 
 import { signUpPageStyles } from "../../assets/jss/containers/signUpPage";
 
+import { AuthContext } from "../../context/auth/authContext";
+
 import image from "../../assets/img/login.jpg";
 import brand from "../../assets/img/m4run_logo_sm.png";
+import { Redirect } from "react-router-dom";
 const useStyles = makeStyles(signUpPageStyles);
 
 const RegisterPage = () => {
   const classes = useStyles();
 
+  const authContext = useContext(AuthContext);
+
+  const { register, isRegistered } = authContext;
+
   const [user, setUser] = useState({ email: "", password: "", password2: "" });
   const [showPass, setShowPass] = useState(false);
+
+  const { email, password } = user;
+
+  if (isRegistered) {
+    return <Redirect to='/login' />;
+  }
 
   const handleInputChange = (value, field) => {
     setUser((prevState) => {
@@ -45,7 +58,7 @@ const RegisterPage = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    register({ email, password });
   };
 
   return (

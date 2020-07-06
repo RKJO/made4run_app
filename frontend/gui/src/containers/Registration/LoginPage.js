@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+// react components for routing our app without refresh
+import { Redirect } from "react-router-dom";
 
 import {
   FormControl,
@@ -15,6 +17,8 @@ import Email from "@material-ui/icons/Email";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
+import { AuthContext } from "../../context/auth/authContext";
+
 import { GridContainer } from "../../components/Grid/GridContainer.js";
 import { GridItem } from "../../components/Grid/GridItem.js";
 import { Card } from "../../components/Card/Card";
@@ -28,13 +32,22 @@ import { signUpPageStyles } from "../../assets/jss/containers/signUpPage";
 
 import image from "../../assets/img/login.jpg";
 import brand from "../../assets/img/m4run_logo_sm.png";
+
 const useStyles = makeStyles(signUpPageStyles);
 
 const LoginPage = () => {
   const classes = useStyles();
 
+  const authContext = useContext(AuthContext);
+
+  const { loginUser, isAuthenticated } = authContext;
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPass, setShowPass] = useState(false);
+
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   const handleInputChange = (value, field) => {
     setFormData((prevState) => {
@@ -42,6 +55,11 @@ const LoginPage = () => {
       prevLoginValues[field] = value;
       return prevLoginValues;
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser(formData);
   };
 
   return (
@@ -57,7 +75,7 @@ const LoginPage = () => {
         <GridContainer justify='center'>
           <GridItem xs={12} sm={12} md={4}>
             <Card>
-              <form className={classes.form}>
+              <form className={classes.form} onSubmit={handleSubmit}>
                 <CardHeader color='gray' className={classes.cardHeader}>
                   <img src={brand} alt='Logo' className={classes.logo} />
                   <h4 className={classes.subtitle}>Login</h4>
