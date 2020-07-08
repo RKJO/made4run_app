@@ -47,12 +47,16 @@ const CompetitionsLanding = () => {
   const [competitions, setCompetitions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getDate = () => {
+  const getDate = (month = 1) => {
     const date = new Date();
-    const firstDay = new Date(date.getFullYear(), date.getMonth(), 2)
+    const firstDay = new Date(
+      date.getFullYear(),
+      date.getMonth() + month - 1,
+      2
+    )
       .toISOString()
       .slice(0, 10);
-    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 1)
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + month, 1)
       .toISOString()
       .slice(0, 10);
     return `/?min_date=${firstDay}&max_date=${lastDay}`;
@@ -62,7 +66,6 @@ const CompetitionsLanding = () => {
 
   const feachData = async (queryParams = "/") => {
     setLoading(true);
-
     try {
       const response = await fetch(`${apiURL}competitions${queryParams}`);
       const data = await response.json();
@@ -74,9 +77,11 @@ const CompetitionsLanding = () => {
     setLoading(false);
   };
 
+  const handleClick = () => setQueryDate(getDate());
+
   useEffect(() => {
     feachData(queryDate);
-  }, []);
+  }, [queryDate]);
 
   return (
     <section className={classes.section}>

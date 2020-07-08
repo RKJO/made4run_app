@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // nodejs library that concatenates classes
@@ -27,9 +27,8 @@ const MapDisplayGPX = ({
     [classes.leafletContainer]: mapLG,
     [classes.leafletSmall]: mapSM,
   });
-  console.log(typeof gpx);
 
-  const [mapPosition, setMapPosition] = useState([52.22977, 21.01178]);
+  const dafultMapPosition = [52.22977, 21.01178];
 
   useEffect(() => {
     new L.GPX(gpx, { async: true })
@@ -39,12 +38,12 @@ const MapDisplayGPX = ({
         });
       })
       .addTo(map.current.leafletElement);
-  }, [map]);
+  }, [gpx]);
 
   return (
     <Map
       ref={map}
-      center={mapPosition}
+      center={dafultMapPosition}
       zoom={13}
       className={leafletContainer}
       doubleClickZoom={doubleClickZoom}

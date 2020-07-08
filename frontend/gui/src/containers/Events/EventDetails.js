@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { container, conatinerFluid, section } from "../../assets/jss/main.js";
 import { GridContainer } from "../../components/Grid/GridContainer.js";
 import { GridItem } from "../../components/Grid/GridItem.js";
-import Button from "../../components/CustomButtons/Button.js";
 import { Card } from "../../components/Card/Card";
 import { CardHeader } from "../../components/Card/CardHeader";
 import { CardAvatar } from "../../components/Card/CardAvatar";
@@ -57,7 +56,6 @@ const EventDetails = (props) => {
     feachData();
   }, []);
 
-  console.log("description", event.description);
   return (
     <>
       {loading ? (

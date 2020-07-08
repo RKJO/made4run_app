@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  container,
-  conatinerFluid,
-  section,
-} from "../../../assets/jss/main.js";
+import { container, conatinerFluid } from "../../../assets/jss/main.js";
 
 // react plugin for creating date-time-picker
 import DateFnsUtils from "@date-io/date-fns";
@@ -22,10 +18,8 @@ import {
   // FormHelperText,
   Input,
   InputLabel,
-  OutlinedInput,
 } from "@material-ui/core";
 // custom components
-import RegularButton from "../../../components/CustomButtons/Button";
 import { GridContainer } from "../../../components/Grid/GridContainer";
 import { GridItem } from "../../../components/Grid/GridItem";
 import { BaseMap } from "./BaseMap";
@@ -68,7 +62,6 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-const apiURL = process.env.REACT_APP_API_URL;
 
 const EventCreate = () => {
   const classes = useStyles();

@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { container, conatinerFluid, section } from "../../assets/jss/main.js";
 import { GridContainer } from "../../components/Grid/GridContainer.js";
 import { GridItem } from "../../components/Grid/GridItem.js";
-import RegularButton from "../../components/CustomButtons/Button.js";
 import { CustomCard } from "../../components/CustomCard/CustomCard.js";
 
 import CircularProgress from "@material-ui/core/CircularProgress";

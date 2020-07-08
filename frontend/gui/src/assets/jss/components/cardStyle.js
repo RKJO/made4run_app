@@ -1,4 +1,4 @@
-import { blackColor, whiteColor } from "../main.js";
+import { whiteColor } from "../main.js";
 
 const cardStyle = {
   card: {

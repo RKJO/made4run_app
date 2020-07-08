@@ -5,6 +5,7 @@ import {
   infoCardHeader,
   primaryCardHeader,
   roseCardHeader,
+  grayCardHeader,
   whiteColor,
 } from "../main.js";
 
@@ -118,6 +119,15 @@ const cardHeaderStyle = {
     "&:not($cardHeaderIcon)": {
       ...roseCardHeader,
     },
+  },
+  grayCardHeader: {
+    color: whiteColor,
+    "&:not($cardHeaderIcon)": {
+      ...grayCardHeader,
+    },
+  },
+  logo: {
+    maxWidth: "100px",
   },
 };
 
