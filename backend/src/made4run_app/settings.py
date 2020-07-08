@@ -19,7 +19,6 @@ gettext = lambda s: s
 #   with is better PROJECT_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -30,7 +29,7 @@ SECRET_KEY = '!ayqj3%u)w4r1vlh$c&mn^)iljfi*w8l2uau^0-lem)l#fhm3r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     # External apps
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
     'corsheaders',
     'versatileimagefield',
@@ -167,8 +167,9 @@ LANGUAGES = (
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
-STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'made4run_app', 'static'),
@@ -184,7 +185,9 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 CORS_ORIGIN_WHITELIST = [

@@ -119,7 +119,7 @@ pre_save.connect(pre_save_competition_receiver, sender=Competition)
 
 
 class Distance(models.Model):
-    name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the distance"))
+    name = models.CharField(_('Name'), max_length=255, help_text=_("Name of the distance"), null=True, blank=True)
     distance_km = models.DecimalField(
         _('distance'),
         help_text=_("The ideal track length in kilometer."),

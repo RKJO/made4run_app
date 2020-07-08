@@ -37,6 +37,7 @@ class DistanceSerializer(serializers.ModelSerializer):
 
 class CompetitionModelSerializer(serializers.ModelSerializer):
     distances = serializers.StringRelatedField(many=True)
+    # distances = DistanceSerializer(many=True)
 
     class Meta:
         model = Competition
