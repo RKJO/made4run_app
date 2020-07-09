@@ -6,7 +6,8 @@ from rest_framework_nested import routers
 from events.api.views import TeamCompetitionEventViewSet, TeamWorkoutEventViewSet
 from teams.api.views import (
     TeamViewSet,
-    TeamMembershipViewSet)
+    TeamMembershipViewSet,
+    )
 
 router = routers.DefaultRouter()
 router.register(r'', TeamViewSet)

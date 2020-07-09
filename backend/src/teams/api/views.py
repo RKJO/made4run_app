@@ -1,5 +1,5 @@
-from rest_framework import viewsets, serializers
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from core.permissions import IsTeamAdmin
 from teams.models import (
@@ -39,8 +39,10 @@ class TeamViewSet(viewsets.ModelViewSet):
 
 
 class TeamMembershipViewSet(viewsets.ModelViewSet):
-    serializer_class = TeamMembershipSerializer
+    """Manage Team Members in the database"""
     queryset = TeamMembership.objects.all()
+    serializer_class = TeamMembershipSerializer
 
     def get_queryset(self):
         return TeamMembership.objects.filter(team__slug=self.kwargs['team_slug'])
+
