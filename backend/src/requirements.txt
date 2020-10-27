@@ -1,6 +1,6 @@
 asgiref==3.2.3
 cffi==1.14.0
-cryptography==2.8
+cryptography==3.2
 Django==3.0.3
 django-cors-headers==3.2.1
 django-filter==2.2.0
